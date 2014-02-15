@@ -11,14 +11,6 @@ exports.io     = io     = require("socket.io").listen server, log: false
 
 exports.db     = db     = require "mysql-promise"
 
-exports.email_server    = require("emailjs").server.connect
-  user     : "bitcamp_bitcamp"
-  password : process.env.EMAIL_PASSWORD
-  host     : "smtp.webfaction.com"
-  ssl      : true
-  timeout  : 5000
-  domain   : "bitca.mp"
-
 
 cacheTime = 86400000
 

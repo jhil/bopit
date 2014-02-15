@@ -3,14 +3,9 @@
 
 ready.then ->
   main     = require "./server/main"
-  fireside = require "./server/fireside"
 
   # API Routes
-  app.get  "/api/bitcamp", main.bitcamp
-  app.post "/api/signup",  main.signup
-  app.get  "/api/schools", main.schools
-
-  app.get  "/api/fireside/blocks", fireside.blocks
+  app.get  "/api/bopit", main.bopit
 
   # Angular Routes
   app.get "/",             indexRoute

@@ -12,9 +12,10 @@
     "jquery-ui": "~1.10.3",
     "socket.io-client": "~0.9.16",
     "picturefill": "~1.2.1",
-    "jquery": "~2.1.0",
     "flowtype": "*",
     "angular-animate": "~1.2.12",
-    "animate.css": "~3.0.0"
+    "animate.css": "~3.0.0",
+    "jquery": "~2.1.0",
+    "d3js": "*"
   }
 }
