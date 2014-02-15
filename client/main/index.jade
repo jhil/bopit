@@ -23,9 +23,16 @@
 
   #main-inner
     .row.toy
-      img(src="images/bopit-toy.svg" height="420")
+      .imagesTop
+        img#toyPull(src="images/toy-pull.svg" height="420")
+      .imagesTop
+        img#toyBody(src="images/toy-body.svg" height="420")
+      .imagesTop
+        img#toyBop(src="images/toy-bop.svg" height="420")
+      .imagesTop
+        img#toyStripes(src="images/toy-stripes.svg" height="420")
 
-    #leap(ng-controller="LeapCtrl" ng-init="leapDebug = true")
+    #leap(ng-controller="LeapCtrl" ng-init="leapDebug = false")
       .leap#leapUI(ng-show="leapDebug")
         span.text-valign
           h2
