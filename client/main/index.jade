@@ -1,36 +1,37 @@
-#main(ng-show="isLoaded")
-  header#header
-    //- .row
-    //-   .col-xs-12
-    //-     h1 ;) put a title here or something hshshh
+#main(ng-show="isLoaded" role="main" ng-controller="ViewportCtrl")
+  .row.score-area
+    .score.current
+      .status
+        img(src="images/circle.svg")
+      h1 12
+      .bar
+      p @jhilmd
+    .score
+      h1 6
+      .bar
+      p @_lssr
+    .score.dead
+      .status
+        img(src="images/x.svg")
+      h1 3
+      .bar
+      p @whatmariel
+    .score
+      h1 2
+      .bar
+      p @zfogg
 
-    //-   .col-xs-12
-    //-     h2 And a subtitle here ya know
-    //-     h2
-    //-       button 'call to action' button
+  #main-inner
+    .row.toy
+      img(src="images/bopit-toy.svg" height="420")
 
-  section(role="main" ng-controller="ViewportCtrl")
-    .row
-      .row
-        .col-xs-6.col-xs-offset-3
-          .col-xs-12.col-md-3
-            h2 12
-            p.
-              @jhilmd
-          .col-xs-12.col-md-3
-            h2 8
-            p.
-              @marielwhat
-          .col-xs-12.col-md-3
-            h2 4
-            p.
-              @zfogg
-          .col-xs-12.col-md-3
-            h2 6
-            p.
-              @_lssr
-      .row
-        .col-xs-12#bodySvg
-
-
+    #leap(ng-controller="LeapCtrl")
+      .leap#leapUI(ng-show="leapDebug" ng-init="leapDebug = true")
+        span.text-valign
+          h2
+            button.btn.btn-default(ng-click="leap.connect()") leap.connect()
+      .leap
+        h1 {{ numFingers }}
+      .leap#leapCanvas
+        canvas#canvas
 

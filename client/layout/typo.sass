@@ -5,94 +5,50 @@
 
 body
   font-family:      $font-family-base
-  font-size:        18px
+  font-size:        $font-size-base
   color:            $text-color
   background-color: $body-bg
 
+a
+  color:       $color_green
+  
+
 
 h1, .h1,
-h2, .h2,
-h3, .h3,
-h4, .h4,
-h5, .h5,
-h6, .h6,
 p, .p,
 a, .a
-  line-height: 1.45
+  line-height: 1.4
   font-weight: normal
   margin: 0
 
   font-family: inherit
   font-size:   inherit
 
-  user-select: text
-
-
-button, .button
-  color: $color_white
-  letter-spacing: 1px
-  backface-visibility: hidden
-  @include transition(all 0.2s ease-out)
-  &:hover
-    opacity: 0.85
-
 
 b, .b, strong, .strong
-  font-weight: bold
+  font-weight: 800
 
 i, .i, em, .em
   font-style: italic
 
 
 h1, .h1
-  font-size:      3.2em
-  font-weight:    300
-  margin-top:     0.75em
-  padding-bottom:  0.75em
+  font-size:      6em
+  font-weight:    800
+  line-height:    1.1
   text-transform: uppercase
-
-h2, .h2
-  font-size:     2.2em
-  font-weight:   bold
-  margin-top:    1rem
-  padding-bottom: 1rem
-
-h3, .h3
-  font-size:     1.5em
-  margin-top:    1rem
-  padding-bottom: 1rem
-
-h4, .h4
-  font-size:     1.5em
-  margin-top:    0.65rem
-  padding-bottom: 0.65rem
-  color:         $color_grey-light
-
-h5, .h5
-  font-size:     1.35em
-  margin-top:    0.5rem
-  padding-bottom: 0.5rem
-  color:         $color_grey-light
-
-h6, .h6
-  font-size:     1.2em
-  margin-top:    0.5rem
-  padding-bottom: 0.5rem
 
 p, .p
   font-size:      1em
   padding-bottom: 1rem
 
-
-.h1, .h2, .h3, .h4, .h5, .h6, .p
+.h1, .p
   margin:  0
   padding: 0
 
-
 ::selection
-  background: $color_white
-  color:      $gray-dark
-
+  background: $color_purple
+  color:      $color_white
 
 ul
   padding-left: 0

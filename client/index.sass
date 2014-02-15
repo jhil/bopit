@@ -5,6 +5,7 @@
 @import 'sass-bootstrap/lib/normalize'
 @import 'sass-bootstrap/lib/glyphicons'
 @import 'sass-bootstrap/lib/grid'
+@import 'sass-bootstrap/lib/buttons'
 
 
 *, *:before, *:after
@@ -22,6 +23,7 @@ body
   white-space: pre-line
   min-height: 100%
   margin-bottom: -1*$footer-height
+  padding-top: 4em
 
 #wrapper:after
   content: ""
@@ -29,76 +31,17 @@ body
 
 #footer, #wrapper:after
   height: $footer-height
+  margin-bottom: 2em
 
 .wrapper
   overflow: hidden
   margin: 0 auto
 
-.btc-row
-  padding: 2.5em 1em
-  text-align: center
-  position: relative
-
-.btc-background-wrapper
-  position: absolute
-  top: 0
-  left: 0
-  @include square(100%)
-  .btc-background
-    margin: 0 auto
-    @include square(100%)
-
 .clearfix
   @include clearfix()
 
-.noselect
-  user-select: none
-
-*
-  @extend .noselect
-
-button, .button
-  max-width: 10em
-  width: 100%
-  padding: 0.5em
-  border: none
-  font-weight: bold
-  border-radius: 6px
-  user-select: none !important
-
-input
-  @include placeholder($color_white)
-
 *:focus, *:active, *:hover
   outline: none
-
-.noselect
-  @include user-select(none)
-
-fieldset
-  border: none
-  margin-bottom: 1.25em
-
-.vspace
-  display: block
-  height: 5vw
-  max-height: 120px
-
-
-#header
-  white-space: normal
-  .btc-background
-    z-index: 1
-    max-width: 60.0em
-    height: 100%
-    #treetent
-      position: absolute
-      left: 10%
-      bottom: 0
-  #logo
-    z-index: 3
-    padding: 0.938em 0
-    margin-bottom: 40px
 
 #footer
   padding-top: 0
@@ -112,11 +55,6 @@ fieldset
       display: table-cell
       vertical-align: middle
       text-align: center
-  a
-    &:hover
-      color: $color_turquoise-dark
-    color: $color_turquoise
-
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak
   display: none !important
@@ -134,3 +72,49 @@ fieldset
       animation: fadeOutUp $leaveTime
     &.ng-enter
       animation: fadeInDown $enterTime $leaveTime
+
+.score-area
+  margin-top: 4em
+  display: inline
+
+.bar
+  width: 10em
+  height: .25em
+  background: $color_purple
+  margin-bottom: 0 auto 1em
+
+
+.score
+  margin: 0 2em
+  color: $color_purple
+  display: inline-block
+
+.current
+  color: inherit
+
+.dead
+  color: $color_gray-light
+  .bar
+    background: $color_gray-light
+
+#main-inner
+  .toy
+    margin-top: 5em
+
+  position: relative
+  #leap, .leap
+    @include square(100%)
+    position: absolute
+    top: 0
+    left: 0
+    h1
+      color: $color_yellow
+  #leapUI
+    z-index: 2000
+    .text-valign
+      line-height: 420px
+  #leapCanvas
+    z-index: 1000
+
+.share
+  margin-top: 3em
