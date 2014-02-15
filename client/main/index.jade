@@ -1,13 +1,11 @@
 #main(ng-show="isLoaded" role="main")
-  #header
+  #header(ng-controller="GameStateCtrl")
     .row.score
-      h1 0
+      h1 {{score}}
     .row.players
       ul
-        li.current jhilmd
-        li whatmariel
-        li _lssr
-        li zfogg
+        li(ng-repeat="user in users", ng-class="{current: user.current}")
+          | {{ user.name }}
 
   #main-inner
     .row.toy
