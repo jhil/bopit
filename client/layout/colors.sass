@@ -35,26 +35,11 @@ a
   @include light-on-dark($color_grey-dark)
 
 
+#wrapper
+  @include dark-on-light(transparent, $color_grey-dark)
+
 header
-  @include dark-on-light(transparent)
-
-#description
-  @include light-on-dark($color_grey-dark)
-
-#isfor
-  @include dark-on-light($color_white)
-
-#permission
-  @include light-on-dark($color_orange)
-
-#sponsors, #partners
-  @include dark-on-light($color_white)
-
-#twitter
-  @include dark-on-light($color_blue-light, $color_grey-dark)
-
-#map
-  @include light-on-dark($color_blue-dark)
+  @include dark-on-light($color_grey-dark, $color_white)
 
 footer
-  @include light-on-dark($color_grey-dark)
+  @include dark-on-light($color_grey-dark, $color_white)
