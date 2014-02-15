@@ -6,7 +6,7 @@ module.exports = (grunt) ->
 
 
   grunt.initConfig
-    bitcamp:
+    bopit:
 
       app:   "client"
       srv:   "server"
@@ -21,13 +21,13 @@ module.exports = (grunt) ->
 
       dev:
         options:
-          script: "bitcamp.coffee"
+          script: "bopit.coffee"
           node_env: "development"
           port: process.env.PORT or 8000
 
       prod:
         options:
-          script: "bitcamp.coffee"
+          script: "bopit.coffee"
           node_env: "production"
           port: process.env.PORT or 80
 
@@ -35,50 +35,50 @@ module.exports = (grunt) ->
     prettify:
       dist:
         expand: true
-        cwd:  "<%= bitcamp.dist %>"
+        cwd:  "<%= bopit.dist %>"
         src:  "**/*.html"
-        dest: "<%= bitcamp.dist %>"
+        dest: "<%= bopit.dist %>"
 
     watch:
       views_templates:
         files: [
-          "<%= bitcamp.app %>/**/*.jade",
-          "!<%= bitcamp.app %>/index.jade"
+          "<%= bopit.app %>/**/*.jade",
+          "!<%= bopit.app %>/index.jade"
         ]
         tasks: [ "newer:jade:templates" ]
       views_index:
-        files: [ "<%= bitcamp.app %>/index.jade" ]
+        files: [ "<%= bopit.app %>/index.jade" ]
         tasks: [ "newer:jade:index" ]
 
       scripts:
-        files: ["<%= bitcamp.app %>/**/*.coffee"]
+        files: ["<%= bopit.app %>/**/*.coffee"]
         tasks: ["newer:coffee:dist"]
 
       styles:
-        files: ["<%= bitcamp.app %>/**/*.sass"]
+        files: ["<%= bopit.app %>/**/*.sass"]
         tasks: [ "compass:dev", "autoprefixer" ]
 
       livereload_css:
         options: livereload: true
-        files: [ "<%= bitcamp.tmp %>/**/*.css" ]
+        files: [ "<%= bopit.tmp %>/**/*.css" ]
 
       livereload_else:
         options: livereload: true
         files: [
-          "<%= bitcamp.dist %>/index.html"
-          "<%= bitcamp.tmp %>/**/*.html"
-          "<%= bitcamp.tmp %>/**/*.js"
+          "<%= bopit.dist %>/index.html"
+          "<%= bopit.tmp %>/**/*.html"
+          "<%= bopit.tmp %>/**/*.js"
         ]
 
       express:
-        files: [ "<%= bitcamp.srv %>/**/*.coffee", "bitcamp.coffee" ]
+        files: [ "<%= bopit.srv %>/**/*.coffee", "bopit.coffee" ]
         tasks: ["express:dev"]
         options:
           livereload: true
           nospawn:    true
 
       css:
-        files: ["<%= bitcamp.app %>/**/*.css"]
+        files: ["<%= bopit.app %>/**/*.css"]
         tasks: [ "newer:copy:styles_tmp", "autoprefixer" ]
 
       gruntfile: files: ["Gruntfile.{js,coffee}"]
@@ -89,8 +89,8 @@ module.exports = (grunt) ->
         files: [
           dot: true
           src: [
-            "<%= bitcamp.tmp %>/*"
-            "<%= bitcamp.dist %>/*"
+            "<%= bopit.tmp %>/*"
+            "<%= bopit.dist %>/*"
           ]
         ]
 
@@ -98,15 +98,15 @@ module.exports = (grunt) ->
     jade:
       index:
         expand: true
-        cwd:    "<%= bitcamp.app %>"
+        cwd:    "<%= bopit.app %>"
         src:    [ "index.jade" ]
-        dest:   "<%= bitcamp.dist %>"
+        dest:   "<%= bopit.dist %>"
         ext:    ".html"
       templates:
         expand: true
-        cwd:    "<%= bitcamp.app %>"
+        cwd:    "<%= bopit.app %>"
         src:    [ "**/*.jade", "!index.jade" ]
-        dest:   "<%= bitcamp.tmp %>"
+        dest:   "<%= bopit.tmp %>"
         ext:    ".html"
 
 
@@ -114,9 +114,9 @@ module.exports = (grunt) ->
       options: browsers: ["last 1 version"]
       dist:
         expand: true
-        cwd:    "<%= bitcamp.tmp %>"
+        cwd:    "<%= bopit.tmp %>"
         src:    [ "**/*.css" ]
-        dest:   "<%= bitcamp.tmp %>"
+        dest:   "<%= bopit.tmp %>"
 
 
     coffee:
@@ -124,9 +124,9 @@ module.exports = (grunt) ->
         options: sourceMap: false
         files: [
           expand: true
-          cwd:  "<%= bitcamp.app %>"
+          cwd:  "<%= bopit.app %>"
           src:  "**/*.coffee"
-          dest: "<%= bitcamp.tmp %>"
+          dest: "<%= bopit.tmp %>"
           ext: ".js"
         ]
       dev:
@@ -138,11 +138,11 @@ module.exports = (grunt) ->
 
     compass:
       options:
-        sassDir:                 "<%= bitcamp.app %>"
-        cssDir:                  "<%= bitcamp.tmp %>"
-        imagesDir:               "<%= bitcamp.app %>"
-        javascriptsDir:          "<%= bitcamp.app %>"
-        fontsDir:                "<%= bitcamp.app %>"
+        sassDir:                 "<%= bopit.app %>"
+        cssDir:                  "<%= bopit.tmp %>"
+        imagesDir:               "<%= bopit.app %>"
+        javascriptsDir:          "<%= bopit.app %>"
+        fontsDir:                "<%= bopit.app %>"
         importPath:              "components"
         httpImagesPath:          "/images"
         httpFontsPath:           "/fonts"
@@ -159,53 +159,53 @@ module.exports = (grunt) ->
     rev:
       dist:
         src: [
-          "<%= bitcamp.dist %>/**/*.js"
-          "<%= bitcamp.dist %>/**/*.css"
-          "<%= bitcamp.dist %>/**/*.{png,jpg,jpeg,gif,webp,svg}"
-          "!<%= bitcamp.dist %>/**/opengraph.png"
+          "<%= bopit.dist %>/**/*.js"
+          "<%= bopit.dist %>/**/*.css"
+          "<%= bopit.dist %>/**/*.{png,jpg,jpeg,gif,webp,svg}"
+          "!<%= bopit.dist %>/**/opengraph.png"
         ]
 
 
     useminPrepare:
       options: dest: "public"
-      html: "<%= bitcamp.dist %>/index.html"
+      html: "<%= bopit.dist %>/index.html"
 
 
     usemin:
-      options: assetsDirs: "<%= bitcamp.dist %>"
-      html: [ "<%= bitcamp.dist %>/**/*.html" ]
-      css:  [ "<%= bitcamp.dist %>/**/*.css" ]
+      options: assetsDirs: "<%= bopit.dist %>"
+      html: [ "<%= bopit.dist %>/**/*.html" ]
+      css:  [ "<%= bopit.dist %>/**/*.css" ]
 
 
     usebanner:
       options:
         position: "top"
         banner: require "./ascii"
-      files:  [ "<%= bitcamp.dist %>/index.html" ]
+      files:  [ "<%= bopit.dist %>/index.html" ]
 
 
     ngmin:
       dist:
         expand: true
-        cwd:  "<%= bitcamp.tmp %>"
+        cwd:  "<%= bopit.tmp %>"
         src:  "**/*.js"
-        dest: "<%= bitcamp.tmp %>"
+        dest: "<%= bopit.tmp %>"
 
 
     copy:
       styles_tmp:
         expand: true
-        cwd:  "<%= bitcamp.app %>"
+        cwd:  "<%= bopit.app %>"
         src:  "**/*.css"
-        dest: "<%= bitcamp.tmp %>"
+        dest: "<%= bopit.tmp %>"
       components_dist:
         expand: true
         src:  [ "components/**" ]
-        dest: "<%= bitcamp.dist %>"
+        dest: "<%= bopit.dist %>"
       app_dist:
         expand: true
-        cwd: "<%= bitcamp.app %>"
-        dest: "<%= bitcamp.dist %>"
+        cwd: "<%= bopit.app %>"
+        dest: "<%= bopit.dist %>"
         src: [
           "*.{ico,txt}"
           "images/**/*"
@@ -215,9 +215,9 @@ module.exports = (grunt) ->
 
     inject:
       googleAnalytics:
-        scriptSrc: "<%= bitcamp.tmp %>/ga.js"
+        scriptSrc: "<%= bopit.tmp %>/ga.js"
         files:
-          "<%= bitcamp.dist %>/index.html": "<%= bitcamp.dist %>/index.html"
+          "<%= bopit.dist %>/index.html": "<%= bopit.dist %>/index.html"
 
 
     concurrent:
@@ -250,10 +250,10 @@ module.exports = (grunt) ->
 
 
     ngtemplates:
-      bitcampApp:
-        cwd:  "<%= bitcamp.tmp %>"
+      bopit:
+        cwd:  "<%= bopit.tmp %>"
         src:  [ "**/*.html", "!index.html" ]
-        dest: "<%= bitcamp.dist %>/scripts/templates.js"
+        dest: "<%= bopit.dist %>/scripts/templates.js"
         options:
           usemin: "scripts/main.js"
 
