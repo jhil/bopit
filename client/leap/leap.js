@@ -29,13 +29,12 @@ bopit = angular.module('bopitApp')
     //     });
     // });
 
-    
     var bopAudio = document.createElement('audio');
-    bopAudio.setAttribute('src', '../audio/sound-bop.mp3');
+    bopAudio.setAttribute('src', '/audio/sound-bop.mp3');
     var pullAudio = document.createElement('audio');
-    pullAudio.setAttribute('src', '../audio/sound-pull.mp3');
+    pullAudio.setAttribute('src', '/audio/sound-pull.mp3');
     var twistAudio = document.createElement('audio');
-    twistAudio.setAttribute('src', '../audio/sound-twist.mp3');
+    twistAudio.setAttribute('src', '/audio/sound-twist.mp3');
 
     $scope.output = '';
     var score = 0;
@@ -44,7 +43,7 @@ bopit = angular.module('bopitApp')
         if(frame.hands.length > 0) {
             var hand = frame.hands[0];
 
-            if(hand.pitch() < -.4) {
+            if(hand.pitch() < -.2) {
                 if(normalFlag){
                     twistAudio.play();
                     $('#toyStripes').animate({ "margin-top": "-=60px" }, "fast" );
@@ -52,7 +51,7 @@ bopit = angular.module('bopitApp')
                     score = score + 1;
                 }
                 normalFlag = false;
-            } else if(hand.stabilizedPalmPosition[0] < -40) {
+            } else if(hand.stabilizedPalmPosition[0] > 100) {
                 if(normalFlag){
                     pullAudio.play();
                     $('#toyPull').animate({ "margin-left": "+=60px" }, "fast" );
@@ -70,7 +69,7 @@ bopit = angular.module('bopitApp')
                 }
                 normalFlag = false;
             } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] > -20 
-                    && hand.stabilizedPalmPosition[2] < 50) {
+                    && hand.stabilizedPalmPosition[2] < 60) {
                 normalFlag = true;
             }
         }
