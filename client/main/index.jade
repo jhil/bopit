@@ -1,25 +1,14 @@
 #main(ng-show="isLoaded" role="main" ng-controller="ViewportCtrl")
-  .row.score-area
-    .score.current
-      .status
-        img(src="images/circle.svg")
+  #header
+    .row.score
       h1 12
       .bar
-      p @jhilmd
-    .score
-      h1 6
-      .bar
-      p @_lssr
-    .score.dead
-      .status
-        img(src="images/x.svg")
-      h1 3
-      .bar
-      p @whatmariel
-    .score
-      h1 2
-      .bar
-      p @zfogg
+    .row.players
+      ul
+        li.current jhilmd
+        li whatmariel
+        li _lssr
+        li zfogg
 
   #main-inner
     .row.toy
