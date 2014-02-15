@@ -16,6 +16,7 @@
     "angular-animate": "~1.2.12",
     "animate.css": "~3.0.0",
     "jquery": "~2.1.0",
-    "d3js": "*"
+    "d3js": "*",
+    "leapjs": "~0.4.1"
   }
 }

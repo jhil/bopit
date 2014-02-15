@@ -1,34 +1,37 @@
-#main(ng-show="isLoaded")
+#main(ng-show="isLoaded" role="main" ng-controller="ViewportCtrl")
+  .row.score-area
+    .score.current
+      .status
+        img(src="images/circle.svg")
+      h1 12
+      .bar
+      p @jhilmd
+    .score
+      h1 6
+      .bar
+      p @_lssr
+    .score.dead
+      .status
+        img(src="images/x.svg")
+      h1 3
+      .bar
+      p @whatmariel
+    .score
+      h1 2
+      .bar
+      p @zfogg
 
-  section(role="main" ng-controller="ViewportCtrl")
-    .row.score-area
-      .score.current
-        .status
-          <img src="images/circle.svg">
-        h1 12
-        .bar
-        p.
-          @jhilmd
-      .score
-        h1 6
-        .bar          
-        p.
-          @_lssr
-      .score.dead
-        .status
-          <img src="images/x.svg">          
-        h1 3
-        .bar
-        p.
-          @whatmariel
-      .score
-        h1 2
-        .bar          
-        p.
-          @zfogg    
+  #main-inner
     .row.toy
-      <img src="images/bopit-toy.svg">
-    //- .share
-    //-   p share 
-    //-     a(href="#" target="_blank") bopit.io/example
-    //-     |  to play with friends
+      img(src="images/bopit-toy.svg" height="420")
+
+    #leap(ng-controller="LeapCtrl")
+      .leap#leapUI(ng-show="leapDebug" ng-init="leapDebug = true")
+        span.text-valign
+          h2
+            button.btn.btn-default(ng-click="leap.connect()") leap.connect()
+      .leap
+        h1 {{ numFingers }}
+      .leap#leapCanvas
+        canvas#canvas
+
