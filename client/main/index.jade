@@ -11,8 +11,8 @@
 
   section(role="main" ng-controller="ViewportCtrl")
     .row
-      .row
-        .col-xs-6.col-xs-offset-3
+      .col-xs-6.col-xs-offset-3
+        .row
           .col-xs-12.col-md-3
             h2 12
             p.
@@ -29,7 +29,10 @@
             h2 6
             p.
               @_lssr
-      .row.bodySvg
-
-
+    .row(ng-controller="LeapCtrl")
+      .col-xs-6.col-xs-offset-3
+        h3 {{ numFingers }}
+      .col-xs-6.col-xs-offset-3
+        button(ng-click="leap.connect()") leap.connect()
+        canvas#canvas
 
