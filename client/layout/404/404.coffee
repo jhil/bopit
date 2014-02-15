@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('bitcampApp')
+angular.module('bopitApp')
 
   .controller '404Ctrl', ($scope, $http) ->
     console.log "404 :("

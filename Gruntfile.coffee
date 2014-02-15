@@ -70,12 +70,15 @@ module.exports = (grunt) ->
           "<%= bopit.tmp %>/**/*.js"
         ]
 
+      livereload_js:
+        options: livereload: true
+        files: [ "<%= bopit.app %>/**/*.js" ]
+
       express:
         files: [ "<%= bopit.srv %>/**/*.coffee", "bopit.coffee" ]
         tasks: ["express:dev"]
         options:
-          livereload: true
-          nospawn:    true
+          nospawn: true
 
       css:
         files: ["<%= bopit.app %>/**/*.css"]

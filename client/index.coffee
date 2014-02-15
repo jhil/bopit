@@ -1,4 +1,4 @@
-bitcamp = angular.module('bitcampApp', [
+bopit = angular.module('bopitApp', [
   'ngRoute'
   'ngAnimate'
 ])
@@ -22,7 +22,7 @@ bitcamp = angular.module('bitcampApp', [
     $scope.animReady = false
 
     $timeout ->
-      $scope.animClass = "bitcamp-view"
+      $scope.animClass = "bopit-view"
       $scope.animReady = true
     , 10
 

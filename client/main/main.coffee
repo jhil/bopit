@@ -1,4 +1,4 @@
-angular.module('bitcampApp')
-  .controller 'MainCtrl', ($scope, $http, $anchorScroll) ->
+angular.module('bopitApp')
+  .controller 'MainCtrl', ($scope, $http) ->
     null
 

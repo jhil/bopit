@@ -57,9 +57,9 @@ app.configure ->
 
   db.configure
     host:     'localhost'
-    user:     'bitcamp'
+    user:     'bopit'
     password: process.env.DB_PASSWORD
-    database: 'bitcamp'
+    database: 'bopit'
 
 # Start server
 ready = q.defer()

@@ -1,10 +1,10 @@
 {
-  "name": "bitcamp",
+  "name": "bopit",
   "version": "1.0.0",
   "engines": {
     "node": ">=0.10.25"
   },
-  "repository": "http://github.com/bitcamp/bitca.mp",
+  "repository": "http://github.com/jhil/bopit",
   "dependencies": {
     "emailjs": "~0.3.6",
     "express": "~3.4.3",
@@ -13,7 +13,8 @@
     "socket.io": "~0.9.16",
     "validator": "~2.0.0",
     "q": "~0.9.7",
-    "supermarked": "~1.1.0"
+    "supermarked": "~1.1.0",
+    "coffee-script": "~1.7.1"
   },
   "devDependencies": {
     "grunt-contrib-clean": "~0.5.0",
