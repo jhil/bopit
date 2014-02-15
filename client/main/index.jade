@@ -1,35 +1,29 @@
 #main(ng-show="isLoaded")
-  header#header
-    //- .row
-    //-   .col-xs-12
-    //-     h1 ;) put a title here or something hshshh
-
-    //-   .col-xs-12
-    //-     h2 And a subtitle here ya know
-    //-     h2
-    //-       button 'call to action' button
 
   section(role="main" ng-controller="ViewportCtrl")
-    .row
-      .row
-        .col-xs-6.col-xs-offset-3
-          .col-xs-12.col-md-3
-            h2 12
-            p.
-              @jhilmd
-          .col-xs-12.col-md-3
-            h2 8
-            p.
-              @marielwhat
-          .col-xs-12.col-md-3
-            h2 4
-            p.
-              @zfogg
-          .col-xs-12.col-md-3
-            h2 6
-            p.
-              @_lssr
-      .row.bodySvg
-
-
-
+    .row.score-area
+      .score.current
+        .status
+          <img src="images/circle.svg">
+        h1 12
+        .bar
+        p.
+          @jhilmd
+      .score
+        h1 6
+        .bar          
+        p.
+          @_lssr
+      .score.dead
+        .status
+          <img src="images/x.svg">          
+        h1 3
+        .bar
+        p.
+          @whatmariel
+    .row.toy
+      <img src="images/bopit-toy.svg">
+    .share
+      p share 
+        a(href="#" target="_blank") bopit.io/example
+        |  to play with friends
