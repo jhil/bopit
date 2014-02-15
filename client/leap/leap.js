@@ -31,23 +31,38 @@ bopit = angular.module('bopitApp')
 
 
     $scope.output = '';
+    var normalFlag = false;
     return leap.loop(function(frame){
         if(frame.hands.length > 0) {
             var hand = frame.hands[0];
-            console.log('pitch: ' + hand.pitch() + ' stabilizedPalmPosition: ' + hand.stabilizedPalmPosition);
+            console.log('normalFlag: ' + normalFlag);
 
             if(hand.pitch() < -.4) {
-                $scope.output = 'twist';
-                console.log('twist');
+                // $scope.output = 'twist';
+                if(normalFlag){
+                    $('#toyStripes').animate({ "margin-top": "-=60px" }, "fast" );
+                    $('#toyStripes').animate({ "margin-top": "+=60px" }, "fast" );
+                }
+                normalFlag = false;
             } else if(hand.stabilizedPalmPosition[0] < -30) {
-                $scope.output = 'pull';
-                console.log('pull');
-            } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 20 && hand.stabilizedPalmPosition[2] < -20) {
-                $scope.output = 'bop';
-                console.log('bop');
-            } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] > -20 && hand.stabilizedPalmPosition[2] < 50) {
-                $scope.output = 'normal';
-                console.log('normal');
+                // $scope.output = 'pull';
+                if(normalFlag){
+                    $('#toyPull').animate({ "margin-left": "+=60px" }, "fast" );
+                    $('#toyPull').animate({ "margin-left": "-=60px" }, "fast" );
+                }
+                normalFlag = false;
+            } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] < -10) {
+                // $scope.output = 'bop';
+                if(normalFlag){
+                    var toyBop = $('#toyBop');
+                    toyBop.animate({ "margin-left": "+=35px", "margin-top": "+=10px", "height": "-=20px" }, "fast") ;
+                    toyBop.animate({ "margin-left": "-=35px", "margin-top": "-=10px", "height": "+=20px" }, "fast") ;
+                }
+                normalFlag = false;
+            } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] > -20 
+                    && hand.stabilizedPalmPosition[2] < 50) {
+                // $scope.output = 'normal';
+                normalFlag = true;
             }
         }
         return $scope.$apply();

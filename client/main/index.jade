@@ -32,11 +32,10 @@
       .imagesTop
         img#toyStripes(src="images/toy-stripes.svg" height="420")
 
-    #leap(ng-controller="LeapCtrl" ng-init="leapDebug = false")
+    #leap(ng-controller="LeapCtrl" ng-init="leapDebug = true")
       .leap#leapUI(ng-show="leapDebug")
         span.text-valign
           h2
-            button.btn.btn-default(ng-click="leap.connect()") leap.connect()
       .leap(ng-show="leapDebug")
         h1 {{ output }}
       .leap#leapCanvas

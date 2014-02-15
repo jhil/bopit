@@ -225,29 +225,29 @@ angular.module('bopitApp')
                //    }; 
                // })( jQuery );
 
-               (function( $ ){
-                  $.fn.pushBtn = function() {
-                    this.animate({height: ($(this).height()*0.7), width: ($(this).width()*0.7)}, 1000);
-                    this.animate({height: ($(this).height()*(10/7)), width: ($(this).width()*(10/7))}, 1000);
-                  }; 
-               })( jQuery );
+               // (function( $ ){
+               //    $.fn.pushBtn = function() {
+               //      this.animate({height: ($(this).height()*0.7), width: ($(this).width()*0.7)}, 1000);
+               //      this.animate({height: ($(this).height()*(10/7)), width: ($(this).width()*(10/7))}, 1000);
+               //    }; 
+               // })( jQuery );
 
-               (function( $ ){
-                  $.fn.twistHdl = function() {
-                    this.animate({ "top": "+=150px" }, "slow" );
-                    this.animate({ "top": "-=150px" }, "slow" );
-                  }; 
-               })( jQuery );
+               // (function( $ ){
+               //    $.fn.twistHdl = function() {
+               //      this.animate({ "top": "+=150px" }, "slow" );
+               //      this.animate({ "top": "-=150px" }, "slow" );
+               //    }; 
+               // })( jQuery );
 
-               function pullHdl() {
-                    var currentLeft = this.offset().left;
-                    this.css({left:currentLeft}).animate({ "left": "+=500px" }, "slow" );
-                    this.css({left:currentLeft}).animate({ "left": "-=500px" }, "slow" );
-               }
+               // function pullHdl() {
+               //      var currentLeft = this.offset().left;
+               //      this.css({left:currentLeft}).animate({ "left": "+=500px" }, "slow" );
+               //      this.css({left:currentLeft}).animate({ "left": "-=500px" }, "slow" );
+               // }
 
-               $('#toyPull').pullHdl();
-               // $('#toyBop').pushBtn();
-               $('#toyStripes').twistHdl();
+               // $('#toyPull').pullHdl();
+               // // $('#toyBop').pushBtn();
+               // $('#toyStripes').twistHdl();
 
 
 
