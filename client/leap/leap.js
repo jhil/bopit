@@ -39,13 +39,9 @@ bopit = angular.module('bopitApp')
                     toyBop.animate({ "margin-left": "-=35px", "margin-top": "-=10px", "height": "+=20px" }, "fast") ;
                 }
                 normalFlag = false;
-<<<<<<< HEAD
-            } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] > -20 && hand.stabilizedPalmPosition[2] < 60) {
-=======
             } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 &&
                     hand.stabilizedPalmPosition[2] > -20 &&
                     hand.stabilizedPalmPosition[2] < 60) {
->>>>>>> 4134a1fed0b51193c5c606954954c73d90ea05dd
                 normalFlag = true;
             }
         }
