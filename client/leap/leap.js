@@ -30,11 +30,11 @@ bopit = angular.module('bopitApp')
     // });
 
     var bopAudio = document.createElement('audio');
-    bopAudio.setAttribute('src', '../audio/sound-bop.mp3');
+    bopAudio.setAttribute('src', '/audio/sound-bop.mp3');
     var pullAudio = document.createElement('audio');
-    pullAudio.setAttribute('src', '../audio/sound-pull.mp3');
+    pullAudio.setAttribute('src', '/audio/sound-pull.mp3');
     var twistAudio = document.createElement('audio');
-    twistAudio.setAttribute('src', '../audio/sound-twist.mp3');
+    twistAudio.setAttribute('src', '/audio/sound-twist.mp3');
 
     $scope.output = '';
     var score = 0;
@@ -42,9 +42,8 @@ bopit = angular.module('bopitApp')
     return leap.loop(function(frame){
         if(frame.hands.length > 0) {
             var hand = frame.hands[0];
-            console.log(hand.stabilizedPalmPosition[2]);
 
-            if(hand.pitch() < -.4) {
+            if(hand.pitch() < -.2) {
                 if(normalFlag){
                     twistAudio.play();
                     $('#toyStripes').animate({ "margin-top": "-=60px" }, "fast" );
@@ -60,7 +59,7 @@ bopit = angular.module('bopitApp')
                     score = score + 1;
                 }
                 normalFlag = false;
-            } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] < -4) {
+            } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] < -10) {
                 if(normalFlag){
                     bopAudio.play();
                     var toyBop = $('#toyBop');
