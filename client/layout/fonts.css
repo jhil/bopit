@@ -63,3 +63,10 @@
          url('/fonts/aleo-lightitalic-webfont.ttf') format('truetype'),
          url('/fonts/aleo-lightitalic-webfont.svg#aleolightitalic') format('svg');
 }
+
+@font-face {
+    font-family: 'OpenSans';
+    font-weight: 300;
+    font-style: normal;
+    src: url('http://fonts.googleapis.com/css?family=Open+Sans:300');
+}
