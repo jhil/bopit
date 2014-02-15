@@ -29,33 +29,3 @@ bopit = angular.module('bopitApp', [
     $rootScope.$on "$routeChangeStart", (e, next, current) ->
       null
 
-  .controller "LeapCtrl", ($scope) ->
-    $scope.numFingers = 0
-
-    $scope.leap = leap = new Leap.Controller()
-
-    colors = [
-      "#ac4142"
-      "#d26445"
-      "#90a959"
-      "#75b5aa"
-      "#aa759f"
-    ]
-
-    [c, cHeight, cWidth] = do ->
-      canvas = document.getElementById "canvas"
-      canvas.width  = canvas.clientWidth
-      canvas.height = canvas.clientHeight
-      [ canvas.getContext('2d'), canvas.height, canvas.width]
-
-    leap.on 'frame', (frame) -> $scope.$apply ->
-      c.clearRect 0, 0, cWidth, cHeight
-
-      $scope.numFingers = frame.fingers.length
-
-      for f, i in frame.fingers
-        [x, y, z] = f.tipPosition
-        c.fillStyle = colors[i]
-        c.fillRect x+(cWidth/2), (cHeight)-y, z, z
-        #c.fillStyle = "#000000"
-
