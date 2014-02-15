@@ -29,3 +29,5 @@ bopit = angular.module('bopitApp', [
     $rootScope.$on "$routeChangeStart", (e, next, current) ->
       null
 
+  .factory "bopitSock", ->
+    socket = io.connect()
