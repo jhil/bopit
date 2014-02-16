@@ -75,10 +75,12 @@ module.exports = (grunt) ->
         files: [ "<%= bopit.app %>/**/*.js" ]
 
       express:
+        options:
+          livereload: true
+          nospawn: true
+          debounceDelay: 4000
         files: [ "<%= bopit.srv %>/**/*.coffee", "bopit.coffee" ]
         tasks: ["express:dev"]
-        options:
-          nospawn: true
 
       css:
         files: ["<%= bopit.app %>/**/*.css"]
@@ -244,12 +246,6 @@ module.exports = (grunt) ->
         "copy:components_dist"
         "inject:googleAnalytics"
       ]
-      watch:
-        options: logConcurrentOutput: true
-        tasks: [
-          "watch"
-          "compass:watch"
-        ]
 
 
     ngtemplates:
@@ -312,7 +308,7 @@ module.exports = (grunt) ->
 
         "express:dev"
 
-        "concurrent:watch"
+        "watch"
       ]
 
 

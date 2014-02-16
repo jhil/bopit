@@ -7,7 +7,10 @@ bopit = angular.module('bopitApp', [
 
     $routeProvider
       .when '/',
-        templateUrl: 'main/index.html'
+        templateUrl: 'main/mainView.html'
+        controller: 'MainCtrl'
+      .when '/play',
+        templateUrl: 'play/playView.html'
         controller: 'MainCtrl'
       .when '/404',
         templateUrl: 'layout/404/index.html'

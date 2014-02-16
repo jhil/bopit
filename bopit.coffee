@@ -8,10 +8,8 @@ ready.then ->
   app.get  "/api/bopit", main.bopit
 
   # Angular Routes
-  app.get "/",             indexRoute
-  app.get "/fireside",     indexRoute
-  app.get "/faq",          indexRoute
-  app.get "/faq/sponsors", indexRoute
+  app.get "/",     indexRoute
+  app.get "/play", indexRoute
 
   # Passport-twitter
   app.get '/auth/twitter', passport.authenticate 'twitter'

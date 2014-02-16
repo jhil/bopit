@@ -10,6 +10,7 @@
 
 *, *:before, *:after
   @include box-sizing(border-box)
+  margin: 0
 
 html, body, #buffer
   min-height: 100%
@@ -31,8 +32,6 @@ body
 
 #footer, #wrapper:after
   height: $footer-height
-  margin-bottom: 2em
-  margin-top: 2em
   color: $color_gray-light
 
 .wrapper
@@ -75,6 +74,10 @@ body
     &.ng-enter
       animation: fadeInDown $enterTime $leaveTime
 
+#header
+  span
+    color: $color_gray-light
+
 // SCORE
 
 .bar
@@ -99,7 +102,7 @@ body
   li
     display: inline-block
     float: left
-    margin: 0 1.5em
+    margin: 0 .5em
     padding: .5em 1em
     border: 1px solid #fff
     border-radius: 10px
@@ -157,3 +160,24 @@ li.current
 #toyStripes
   z-index:  5
   margin-top: 30px
+
+#main
+  #header
+    margin: 16em 0 4em
+
+.status
+  color: $color_green
+  display: inline
+  p
+    margin-left: 1em
+    display: inline-block
+
+#teaser
+  position: absolute
+  top: -20em
+  left: 50%
+  margin-left: -690px
+  text-align: center
+  transition: .4s
+  &:hover
+    top: -19em
