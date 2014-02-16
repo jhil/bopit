@@ -4,9 +4,9 @@ bopit = angular.module('bopitApp')
     //CHANGE LIGHT COLOR
 
         var commandLight = 'PUT';
-        // var commandurlLight = 'http://10.20.206.119/api/newdeveloper/lights/3/state';      
+        // var commandurlLight = 'http://10.186.200.112/api/newdeveloper/lights/3/state';      
         //Group
-        var commandurlLight = 'http://10.20.206.119/api/newdeveloper/groups/0/action'; 
+        var commandurlLight = 'http://10.186.200.112/api/newdeveloper/groups/0/action'; 
 
         //Yellow
         var messagebodyYellow = '{"on":true, "sat":255, "bri":255,"hue":12750}'; 
@@ -19,12 +19,12 @@ bopit = angular.module('bopitApp')
 
 
     //FAIL LIGHTS
-        var commandurlLightFail11 = 'http://10.20.206.119/api/newdeveloper/lights/1/pointsymbol';
-        var commandurlLightFail12 = 'http://10.20.206.119/api/newdeveloper/lights/2/pointsymbol';
-        var commandurlLightFail13 = 'http://10.20.206.119/api/newdeveloper/lights/3/pointsymbol';
+        var commandurlLightFail11 = 'http://10.186.200.112/api/newdeveloper/lights/1/pointsymbol';
+        var commandurlLightFail12 = 'http://10.186.200.112/api/newdeveloper/lights/2/pointsymbol';
+        var commandurlLightFail13 = 'http://10.186.200.112/api/newdeveloper/lights/3/pointsymbol';
         var messagebodyFail1 = '{"1":"0A00F1F01F1F1001F1FF100000000001F2F"}';
 
-        var commandurlLightFail21 = 'http://10.20.206.119/api/newdeveloper/groups/0/transmitsymbol';
+        var commandurlLightFail21 = 'http://10.186.200.112/api/newdeveloper/groups/0/transmitsymbol';
         var messagebodyFail2 = '{"symbolselection":"01010501010102010301040105","duration":2000}';
 
     function getHTML(command, commandurl, messagebody)
