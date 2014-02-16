@@ -13,7 +13,7 @@ randomInt = (min, max) ->
 
 
 SETTINGS =
-  numTurns: 6
+  numTurns: 1
 
 
 makeState = ->
@@ -21,6 +21,8 @@ makeState = ->
   isAlive:     true
   score:       0
   currentUser: 0
+
+  turnCounter: 0
 
   gameLoopI:   0
 
@@ -47,12 +49,12 @@ makeState = ->
 STATE = makeState()
 
 
-_lose = (socket) -> ->
+_lose = ->
   console.log "\ndisconnect: game over\n"
   clearInterval STATE.gameLoopI
-  socket.emit "state:all:score", STATE.score
-  socket.emit "state:all:users", STATE.users
-  io.sockets.emit "state:gameOver"
+  io.sockets.emit "state:all:score", STATE.score
+  io.sockets.emit "state:all:users", STATE.users
+  io.sockets.emit "state:gameOver:now", true
   STATE = makeState()
 
 
@@ -64,16 +66,27 @@ io.sockets.on "connection", (socket) ->
   socket.on "state:playing", ->
     STATE.isPlaying = true
 
-    socket.on "disconnect", _lose socket
+    io.sockets.emit "state:playing"
+
+    socket.on "disconnect", ->
+      console.log "disconnecting and losing"
+      _lose()
 
     unless STATE.gameLoopI > 0
       STATE.gameLoopI = setInterval ->
-        io.sockets.emit "state:playing:turn", [
-          "bop", "twist", "pull"
-        ][randomInt 0, 2]
+        STATE.turnCounter++
+        if STATE.turnCounter % SETTINGS.numTurns is 0
+          io.sockets.emit "state:playing:turn", "passit"
+        else
+          io.sockets.emit "state:playing:turn", [
+            "bop", "twist", "pull"
+          ][randomInt 0, 2]
+
       , 2000
 
-  socket.on "state:gameOver", _lose socket
+  socket.on "state:gameOver", ->
+    console.log "just losing"
+    _lose()
 
   socket.on "state:playing:point", (action) ->
     if STATE.isPlaying
@@ -81,12 +94,11 @@ io.sockets.on "connection", (socket) ->
       io.sockets.emit("state:all:score", STATE.score)
 
       if STATE.score % SETTINGS.numTurns is 0
-
         STATE.users[STATE.currentUser].current = false
         STATE.currentUser = STATE.getNextUser()
         STATE.users[STATE.currentUser].current = true
-
         io.sockets.emit("state:all:users", STATE.users)
+
 
 exports.bopit = (req, res) ->
   res.json bopit: true
