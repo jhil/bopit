@@ -1,6 +1,8 @@
 bopit = angular.module('bopitApp')
-.controller("LeapCtrl", function(bopitSock, bopitAudio) {
+.controller("LeapCtrl", function($rootScope, bopitSock, bopitAudio) {
     leap = new Leap.Controller();
+
+    var arePlaying = false;
 
     var normalFlag = false;
     return leap.loop(function(frame){
@@ -30,6 +32,11 @@ bopit = angular.module('bopitApp')
                     var toyBop = $('#toyBop');
                     toyBop.animate({ "margin-left": "+=35px", "margin-top": "+=10px", "height": "-=20px" }, "fast") ;
                     toyBop.animate({ "margin-left": "-=35px", "margin-top": "-=10px", "height": "+=20px" }, "fast") ;
+
+                    if (!arePlaying) {
+                        arePlaying = true;
+                        $rootScope.$emit("play");
+                    }
                 }
                 normalFlag = false;
             } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 &&

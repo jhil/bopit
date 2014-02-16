@@ -1,13 +1,11 @@
 angular.module('bopitApp')
-  .controller "GameStateCtrl", ($scope, bopitSock, $http) ->
+  .controller "GameStateCtrl", ($scope, $rootScope, bopitSock, bopitAudio) ->
 
     $scope.users = []
 
     $scope.score = 0
 
     $scope.nextSound = new buzz.sound "/audio/intro.mp3"
-
-    $scope.nextSound.play()
 
 
     bopitSock.on "score", (s) -> $scope.$apply ->
@@ -16,6 +14,12 @@ angular.module('bopitApp')
     bopitSock.on "users", (us) -> $scope.$apply ->
       $scope.users = us
 
-    bopitSock.on "turn", (t) -> $scope.$apply ->
-      $scope.nextSound?.bind "ended", (e) ->
-        null
+
+    $rootScope.$on "play", ->
+      bopitSock.emit "play"
+
+      $scope.nextSound.play()
+
+      bopitSock.on "turn", (command) -> $scope.$apply ->
+        $scope.nextSound = bopitAudio.queueTurn($scope.nextSound, command)
+
