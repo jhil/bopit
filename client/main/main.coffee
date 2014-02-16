@@ -5,20 +5,20 @@ angular.module('bopitApp')
 
 	leap.on 'deviceDisconnected', () ->
 	  $('.connected').hide()
-	  $('.disconnected').show()
+	  $('.disconnected').fadeIn("slow")
 
 	leap.on 'deviceConnected', () ->
-	  $('.connected').show()
+	  $('.connected').fadeIn("slow")
 	  $('.disconnected').hide()
 
 	leap.connect()
 
 	if leap.timestamp == undefined
 	  $('.connected').hide()
-	  $('.disconnected').show()
+	  $('.disconnected').fadeIn("slow")
 	else
 	  $('.disconnected').hide()
-	  $('.connected').show()
+	  $('.connected').fadeIn("slow")
 
 	return
 
