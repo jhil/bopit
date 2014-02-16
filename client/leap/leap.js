@@ -2,18 +2,20 @@ bopit = angular.module('bopitApp')
 .run(function($rootScope, bopitSock, bopitAudio, leapController, $timeout, roundState) {
     var arePlaying = false;
     var normalFlag = false;
-    var processingGesture = false;
+
+    var canProceed = true;
+
+    var resetCanProceed = function() {
+        canProceed = false;
+        return $timeout(function() { canProceed = true; }, 100);
+    };
 
     $rootScope.$on("gameOver", function() {
         arePlaying = false;
     });
 
     leapController.loop(function(frame){
-        if(frame.hands.length > 0 && !processingGesture) {
-            processingGesture = true;
-            $timeout(function() {
-                processingGesture = false;
-            }, 300);
+        if (frame.hands.length > 0 && canProceed) {
 
             var hand = frame.hands[0];
 
@@ -24,6 +26,7 @@ bopit = angular.module('bopitApp')
                     bopitAudio.twist.play();
                     $('#toyStripes').animate({ "margin-top": "-=60px" }, "fast" );
                     $('#toyStripes').animate({ "margin-top": "+=60px" }, "fast" );
+                    resetCanProceed();
                 }
                 normalFlag = false;
             } else if(hand.stabilizedPalmPosition[0] > 100) {
@@ -33,10 +36,12 @@ bopit = angular.module('bopitApp')
                     bopitAudio.pull.play();
                     $('#toyPull').animate({ "margin-left": "+=60px" }, "fast" );
                     $('#toyPull').animate({ "margin-left": "-=60px" }, "fast" );
+                    resetCanProceed();
                 }
                 normalFlag = false;
             } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] < -5) {
                 if(normalFlag){
+                    resetCanProceed();
                     if (arePlaying) {
                         $rootScope.$emit("bop");
                         bopitSock.emit("state:playing:point", "Bop it!");

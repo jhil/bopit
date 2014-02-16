@@ -17,9 +17,17 @@ ready.then ->
     passport.authenticate('twitter')
 
   app.get '/auth/twitter/callback',
-    passport.authenticate 'twitter',
-      successRedirect: '/play'
-      failureRedirect: '/'
+      (req, res, done) ->
+        console.log "doing Twitter cb"
+        done()
+    ,
+      passport.authenticate 'twitter',
+        successRedirect: '/play'
+        failureRedirect: '/'
+    ,
+      (req, res) ->
+        console.log "done!"
+        res.send()
 
   # 404
   app.get "/404", indexRoute

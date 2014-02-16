@@ -68,7 +68,7 @@ app.configure ->
 passport.use new TwitterStrategy
     consumerKey: 'LMCNe4nVK8CP2bAhOw2xQ'
     consumerSecret: 'Dh1Y9RoCBc9OEGfgPg4mIg1KxFXeEPjlLqyo4NFgePw'
-    callbackURL: "http://#{process.env.HOST or "localhost"}:#{process.env.PORT or 8000}/auth/twitter/callback"
+    callbackURL: "//#{process.env.HOST or "localhost"}:#{process.env.PORT or 8000}/auth/twitter/callback"
   , (token, tokenSecret, profile, done) ->
     process.nextTick () ->
       return done null, profile
