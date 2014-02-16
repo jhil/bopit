@@ -5,6 +5,48 @@ bopit = angular.module('bopitApp')
     var arePlaying = false;
 
     var normalFlag = false;
+
+
+
+    //CHANGE LIGHT COLOR
+
+        var commandLight = 'PUT';
+        var commandurlLight = '/api/newdeveloper/lights/3/state';      
+
+        //Yellow
+        var messagebodyYellow = {"on":true, "sat":255, "bri":255,"hue":10000}; 
+
+        //Purple
+        var messagebodyPurple = {"on":true, "sat":255, "bri":255,"hue":10000}; 
+
+        //Blue
+        var messagebodyBlue = {"on":true, "sat":255, "bri":255,"hue":10000}; 
+
+    //FAIL LIGHTS
+        
+
+
+    function getHTML(command, commandurl, messagebody)
+    {
+        if (window.XMLHttpRequest)
+        {
+            var http = new XMLHttpRequest();
+            http.open(command, commandurl, true);
+
+            http.onreadystatechange = function()
+            {
+                if(http.readyState == 4)
+                {
+
+                }
+            }
+            http.send(messagebody);
+        }
+        return false;
+    }
+
+
+
     return leap.loop(function(frame){
         if(frame.hands.length > 0) {
             var hand = frame.hands[0];
