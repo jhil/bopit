@@ -12,16 +12,17 @@ angular.module('bopitApp')
       $('.connected').hide()
       $('.disconnected').fadeIn("slow")
 
-    leapController.on 'deviceConnected', () ->
-      $('.connected').fadeIn("slow")
-      $('.disconnected').hide()
-
-    leapController.on 'deviceFrame', (fr) ->
-      connected = true
-
     testConnect = () ->
       if connected
         $('.connected').show()
         $('.disconnected').hide()
+      clearTimeout(testTimeout);
+
+    testTimeout = setTimeout testConnect, 1000
+
+      testConnect = () ->
+        if connected
+          $('.connected').show()
+          $('.disconnected').hide()
 
     setTimeout testConnect, 1000
