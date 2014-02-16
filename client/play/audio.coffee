@@ -11,7 +11,7 @@ angular.module('bopitApp')
     sounds_ = {}
 
     for sound in sounds
-      sounds_[sound] = new buzz.sound "/audio/#{sound}.mp3"
+      sounds_[sound] = new buzz.sound "/audio/sound-#{sound}.mp3"
 
     sounds_.queueTurn = (prevSound, command) ->
       ss = [
