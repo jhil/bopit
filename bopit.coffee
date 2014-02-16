@@ -13,6 +13,11 @@ ready.then ->
   app.get "/faq",          indexRoute
   app.get "/faq/sponsors", indexRoute
 
+  # Passport-twitter
+  app.get '/auth/twitter', passport.authenticate 'twitter'
+  app.get '/auth/twitter/callback', passport.authenticate 'twitter', { successRedirect: '/', failureRedirect: '/' }
+
+
   # 404
   app.get "/404", indexRoute
   app.get "/*", [(req, res, next) ->

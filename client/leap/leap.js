@@ -14,7 +14,7 @@ bopit = angular.module('bopitApp')
         if(frame.hands.length > 0) {
             var hand = frame.hands[0];
 
-            if(hand.pitch() < -0.2) {
+            if(hand.pitch() < -0.4) {
                 if(normalFlag){
                     bopitSock.emit("point", "Twist it!");
                     twistAudio.play();
@@ -30,7 +30,7 @@ bopit = angular.module('bopitApp')
                     $('#toyPull').animate({ "margin-left": "-=60px" }, "fast" );
                 }
                 normalFlag = false;
-            } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] < -10) {
+            } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] < -5) {
                 if(normalFlag){
                     bopitSock.emit("point", "Bop it!");
                     bopAudio.play();
@@ -41,7 +41,7 @@ bopit = angular.module('bopitApp')
                 normalFlag = false;
             } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 &&
                     hand.stabilizedPalmPosition[2] > -20 &&
-                    hand.stabilizedPalmPosition[2] < 60) {
+                    hand.stabilizedPalmPosition[2] < 100) {
                 normalFlag = true;
             }
         }

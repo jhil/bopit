@@ -4,6 +4,9 @@ express = require "express"
 
 q       = require "q"
 
+passport = require 'passport' 
+
+TwitterStrategy = require('passport-twitter').Strategy
 
 exports.app    = app    = express()
 exports.server = server = require("http").createServer app
@@ -49,6 +52,11 @@ app.configure ->
     res.setHeader "Pragma"       , "no-cache"
     next()
 
+
+  app.use (req, res) ->
+    res.locals = req.session
+
+
   app.use express.urlencoded()
   app.use express.methodOverride()
   app.use express.json()
@@ -61,14 +69,25 @@ app.configure ->
     password: process.env.DB_PASSWORD
     database: 'bopit'
 
+# Twitter OAuth stuff
+
+passport.use(new TwitterStrategy({
+    consumerKey: 'LMCNe4nVK8CP2bAhOw2xQ',
+    consumerSecret: 'Dh1Y9RoCBc9OEGfgPg4mIg1KxFXeEPjlLqyo4NFgePw',
+    callbackURL: "http://localhost:8000/auth/twitter/callback"
+  }, (token, tokenSecret, profile, done) ->
+    done(null, profile)
+));
+
+
 # Start server
+
 ready = q.defer()
 
 port = process.env.PORT or 8000
 server.listen port, ->
   console.log "Listening on port %d in %s mode", port, app.get("env")
   ready.resolve()
-
 
 exports.ready = ready.promise
 
