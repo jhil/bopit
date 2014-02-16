@@ -42,4 +42,4 @@ bopit = angular.module('bopitApp', [
 
 .factory "roundState", ->
   passedTurn: false
-  canGesture: true
+  gestures: 0

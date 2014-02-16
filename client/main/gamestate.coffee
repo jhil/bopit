@@ -52,7 +52,6 @@ angular.module('bopitApp')
       nextSounds[0].play()
       $scope.score = 0
 
-
     $rootScope.$on "mightLose", (e, turnCommand) ->
       roundState.gestures   = 0
       roundState.passedTurn = false
@@ -66,6 +65,7 @@ angular.module('bopitApp')
 
     $rootScope.$on "cantLose", ->
       commands.map (cmd) -> cmd.cb()
+      console.log roundState
       unless (roundState.passedTurn and roundState.gestures is 1)
         $rootScope.$emit "gameOver"
         bopitSock.emit "state:gameOver"
