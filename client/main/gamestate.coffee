@@ -28,11 +28,21 @@ angular.module('bopitApp')
       $scope.users = us
 
     bopitSock.on "state:playing:turn", (command) -> $scope.$apply ->
-      nextSounds = bopitAudio.queueTurn(
-        nextSounds[nextSounds.length - 1], command)
+      if command is "passit"
+        console.log "passit!"
+        passit = new buzz.sound "/audio/passit.mp3"
+        if nextSounds[nextSounds.length - 1].isEnded()
+          passit.play()
+        else
+          nextSounds[nextSounds.length - 1].bind "ended", -> passit.play()
+          nextSounds = [passit]
+      else
+        nextSounds = bopitAudio.queueTurn(
+          nextSounds[nextSounds.length - 1], command)
+
       queuedSounds.push ns for ns in nextSounds
 
-    bopitSock.on "state:gameOver", -> $scope.$apply ->
+    bopitSock.on "state:gameOver:now", ->
       console.log "restarting game"
 
       roundState.gestures = 0
@@ -49,6 +59,8 @@ angular.module('bopitApp')
 
     $rootScope.$on "play", -> $scope.$apply ->
       bopitSock.emit "state:playing"
+
+    bopitSock.on "state:playing", -> $scope.$apply ->
       nextSounds[0].play()
       $scope.score = 0
 
@@ -66,11 +78,14 @@ angular.module('bopitApp')
     $rootScope.$on "cantLose", ->
       commands.map (cmd) -> cmd.cb()
       console.log roundState
-      unless (roundState.passedTurn and roundState.gestures is 1)
+      if roundState.passedTurn and roundState.gestures is 1
+        console.log "winning!"
+      else
+        console.log "losing!"
         $rootScope.$emit "gameOver"
         bopitSock.emit "state:gameOver"
-        roundState.passedTurn = false
-        roundState.gestures   = 0
+      roundState.passedTurn = false
+      roundState.gestures   = 0
 
     commands.map (cmd) ->
       $rootScope.$on cmd.name, ->

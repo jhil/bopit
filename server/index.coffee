@@ -12,7 +12,7 @@ TwitterStrategy = require('passport-twitter').Strategy
 
 exports.app    = app    = express()
 exports.server = server = require("http").createServer app
-exports.io     = io     = require("socket.io").listen server, log: false
+exports.io     = io     = require("socket.io").listen server, log: true
 
 
 cacheTime = 86400000
