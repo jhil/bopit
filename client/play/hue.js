@@ -44,17 +44,14 @@ bopit = angular.module('bopitApp')
 
 
     $rootScope.$on("bop", function() {
-        console.log("purple");
         getHTML(commandLight, commandurlLight, messagebodyPurple);
     });
 
     $rootScope.$on("pull", function() {
-        console.log("pull");
         getHTML(commandLight, commandurlLight, messagebodyBlue);
     });
 
     $rootScope.$on("twist", function() {
-        console.log("twist");
         getHTML(commandLight, commandurlLight, messagebodyYellow);
     });
 });
