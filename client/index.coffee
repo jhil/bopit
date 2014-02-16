@@ -11,7 +11,6 @@ bopit = angular.module('bopitApp', [
       controller: 'MainCtrl'
     .when '/play',
       templateUrl: 'play/playView.html'
-      #controller: 'MainCtrl'
     .when '/auth/twitter',
       redirectTo: '/auth/twitter'
     .when '/404',
@@ -40,3 +39,7 @@ bopit = angular.module('bopitApp', [
 
 .factory "leapController", ->
   new Leap.Controller()
+
+.factory "roundState", ->
+  passedTurn: false
+  canGesture: true

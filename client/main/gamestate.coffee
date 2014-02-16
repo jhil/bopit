@@ -1,5 +1,5 @@
 angular.module('bopitApp')
-  .controller "GameStateCtrl", ($scope, $rootScope, bopitSock, bopitAudio) ->
+  .controller "GameStateCtrl", ($scope, $rootScope, bopitSock, bopitAudio, roundState) ->
 
     bopitSock.emit "state:lobby"
 
@@ -7,7 +7,9 @@ angular.module('bopitApp')
 
     $scope.score = 0
 
-    $scope.nextSounds = [new buzz.sound "/audio/intro.mp3"]
+    queuedSounds = []
+
+    nextSounds = [new buzz.sound "/audio/intro.mp3"]
 
 
     commands = [
@@ -26,32 +28,52 @@ angular.module('bopitApp')
       $scope.users = us
 
     bopitSock.on "state:playing:turn", (command) -> $scope.$apply ->
-      $scope.nextSounds = bopitAudio.queueTurn(
-        $scope.nextSounds[$scope.nextSounds.length - 1], command)
+      nextSounds = bopitAudio.queueTurn(
+        nextSounds[nextSounds.length - 1], command)
+      queuedSounds.push ns for ns in nextSounds
 
     bopitSock.on "state:gameOver", -> $scope.$apply ->
       console.log "restarting game"
+
+      roundState.gestures = 0
+
+      queuedSounds.map (s) ->
+        s.unbind("ended")
+        s.stop()
+      queuedSounds = []
+
       bopitAudio.gameOver.play()
 
-      $scope.nextSounds.map (s) -> s.stop()
-      $scope.nextSounds = [new buzz.sound "/audio/intro.mp3"]
+      nextSounds = [new buzz.sound "/audio/intro.mp3"]
 
 
     $rootScope.$on "play", -> $scope.$apply ->
       bopitSock.emit "state:playing"
-      $scope.nextSounds[0].play()
+      nextSounds[0].play()
       $scope.score = 0
 
+
     $rootScope.$on "mightLose", (e, turnCommand) ->
+      roundState.gestures   = 0
+      roundState.passedTurn = false
       commands.map (cmd) ->
         cmd.cb = $rootScope.$on cmd.name, ->
-          unless turnCommand is cmd.name
-            console.log "lose!"
+          if turnCommand is cmd.name
+            roundState.passedTurn = true
+          else
+            roundState.passedTurn = false
             $rootScope.$emit "cantLose"
-            $rootScope.$emit "gameOver"
-            bopitSock.emit "state:gameOver"
 
     $rootScope.$on "cantLose", ->
-      console.log "stuff"
       commands.map (cmd) -> cmd.cb()
+      unless (roundState.passedTurn and roundState.gestures is 1)
+        $rootScope.$emit "gameOver"
+        bopitSock.emit "state:gameOver"
+        roundState.passedTurn = false
+        roundState.gestures   = 0
 
+    commands.map (cmd) ->
+      $rootScope.$on cmd.name, ->
+        roundState.gestures++
+        if roundState.gestures > 1
+          $rootScope.$emit "cantLose"

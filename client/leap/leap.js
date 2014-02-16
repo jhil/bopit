@@ -1,14 +1,20 @@
 bopit = angular.module('bopitApp')
-.run(function($rootScope, bopitSock, bopitAudio, leapController) {
+.run(function($rootScope, bopitSock, bopitAudio, leapController, $timeout, roundState) {
     var arePlaying = false;
     var normalFlag = false;
+    var processingGesture = false;
 
     $rootScope.$on("gameOver", function() {
         arePlaying = false;
     });
 
     leapController.loop(function(frame){
-        if(frame.hands.length > 0) {
+        if(frame.hands.length > 0 && !processingGesture) {
+            processingGesture = true;
+            $timeout(function() {
+                processingGesture = false;
+            }, 300);
+
             var hand = frame.hands[0];
 
             if(hand.pitch() < -0.4) {
@@ -39,7 +45,8 @@ bopit = angular.module('bopitApp')
                         toyBop.animate({ "margin-left": "+=66px", "margin-top": "+=20px", "height": "-=40px" }, "fast") ;
                         toyBop.animate({ "margin-left": "-=66px", "margin-top": "-=20px", "height": "+=40px" }, "fast") ;
                     } else {
-                        arePlaying = true;
+                        arePlaying          = true;
+                        roundState.gestures = 0;
                         $rootScope.$emit("play");
                     }
                 }

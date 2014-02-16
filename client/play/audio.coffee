@@ -1,6 +1,6 @@
 angular.module('bopitApp')
 
-  .factory "bopitAudio", ($rootScope, $timeout) ->
+  .factory "bopitAudio", ($rootScope, $timeout, roundState) ->
 
     sounds = [
       "bop"
@@ -36,12 +36,9 @@ angular.module('bopitApp')
 
       ss[1].bind "ended", ->
         ss[2].play()
-        $timeout ->
-          $rootScope.$emit "cantLose"
-        , 0.5 * (ss[1].getDuration() * 1000)
-
 
       ss[2].bind "ended", ->
+        $rootScope.$emit "cantLose"
         ss[3].play()
 
       ss[3].bind "ended", ->
@@ -50,8 +47,9 @@ angular.module('bopitApp')
         ss[0].play()
         $rootScope.$emit "mightLose", command
       else
-        prevSound.bind "ended", -> ss[0].play()
-        $rootScope.$emit "mightLose", command
+        prevSound.bind "ended", ->
+          ss[0].play()
+          $rootScope.$emit "mightLose", command
 
       ss
 
