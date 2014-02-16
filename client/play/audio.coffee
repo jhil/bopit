@@ -1,6 +1,6 @@
 angular.module('bopitApp')
 
-  .factory "bopitAudio", ->
+  .factory "bopitAudio", ($rootScope) ->
 
     sounds = [
       "bop"
@@ -21,17 +21,19 @@ angular.module('bopitApp')
         new buzz.sound "/audio/fill.mp3"
       ]
 
-      ss[0..-2].forEach (s, i) ->
-        s.bind 'ended', ->
-          ss[i+1].play()
+      ss[0].bind "ended", -> ss[1].play()
+      ss[1].bind "ended", ->
+        ss[2].play()
+        $rootScope.$emit "mightLose"
+      ss[2].bind "ended", -> ss[3].play()
+      ss[3].bind "ended", ->
+        $rootScope.$emit "cantLose"
 
       if prevSound.isEnded()
-        ss[0].play()
-      else
-        prevSound.bind 'ended', ->
-          ss[0].play()
+      then ss[0].play()
+      else prevSound.bind "ended", -> ss[0].play()
 
-      ss[ss.length-1]
+      ss[3]
 
     sounds_
 

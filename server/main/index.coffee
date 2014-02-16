@@ -17,17 +17,22 @@ SETTINGS =
   numUsers: 4
 
 
-STATE =
+makeState = ->
   isPlaying:   false
   isAlive:     true
   score:       0
   currentUser: 0
   users:       []
 
+  gameLoopI:   0
+
   getNextUser: ->
     if STATE.currentUser is (SETTINGS.numUsers-1)
     then 0
     else STATE.currentUser+1
+
+
+STATE = makeState()
 
 
 STATE.users = [
@@ -46,13 +51,28 @@ STATE.users = [
 
 
 io.sockets.on "connection", (socket) ->
-  socket.emit "score", STATE.score
-  socket.emit "users", STATE.users
+  socket.on "prePlay", ->
+    socket.emit "score", STATE.score
+    socket.emit "users", STATE.users
 
   socket.on "play", ->
-    setInterval ->
-      socket.emit "turn",  ["bop", "twist", "pull"][randomInt 0, 2]
-    , 2000
+    unless STATE.gameLoopI > 0
+      # When the 'leader' disconnects
+      socket.on "disconnect", _lose
+      # Only send turns to the 'leader'
+      STATE.gameLoopI = setInterval ->
+        io.sockets.emit "turn",  ["bop", "twist", "pull"][randomInt 0, 2]
+      , 2000
+
+
+  _lose = ->
+    clearInterval STATE.gameLoopI
+    socket.emit "score", STATE.score
+    socket.emit "users", STATE.users
+    socket.emit "gameOver"
+    STATE = makeState()
+
+  socket.on "lose", _lose
 
   socket.on "point", (action) ->
     STATE.score++

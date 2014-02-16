@@ -1,10 +1,9 @@
 bopit = angular.module('bopitApp')
-.controller("LeapCtrl", function($rootScope, bopitSock, bopitAudio) {
-    leap = new Leap.Controller();
-
+.run(function($rootScope, bopitSock, bopitAudio) {
+    var leap       = new Leap.Controller();
     var arePlaying = false;
-
     var normalFlag = false;
+
     return leap.loop(function(frame){
         if(frame.hands.length > 0) {
             var hand = frame.hands[0];
