@@ -1,7 +1,7 @@
 {check}            = require "validator"
 q                  = require "q"
 
-{db, email_server, io} = require "../"
+{email_server, io} = require "../"
 
 
 randomN = (min, max) ->
@@ -22,7 +22,6 @@ makeState = ->
   isAlive:     true
   score:       0
   currentUser: 0
-  users:       []
 
   gameLoopI:   0
 
@@ -31,61 +30,65 @@ makeState = ->
     then 0
     else STATE.currentUser+1
 
+  users: [
+    name: 'jhilmd'
+    current: true
+  ,
+    name: 'whatmariel'
+    current: false
+  ,
+    name: '_lssr'
+    current: false
+  ,
+    name: 'zfogg'
+    current: false
+  ]
+
 
 STATE = makeState()
 
 
-STATE.users = [
-  name: 'jhilmd'
-  current: true
-,
-  name: 'whatmariel'
-  current: false
-,
-  name: '_lssr'
-  current: false
-,
-  name: 'zfogg'
-  current: false
-]
+_lose = (socket) -> ->
+  console.log "\ndisconnect: game over\n"
+  clearInterval STATE.gameLoopI
+  socket.emit "state:all:score", STATE.score
+  socket.emit "state:all:users", STATE.users
+  io.sockets.emit "state:gameOver"
+  STATE = makeState()
 
 
 io.sockets.on "connection", (socket) ->
-  socket.on "prePlay", ->
-    socket.emit "score", STATE.score
-    socket.emit "users", STATE.users
+  socket.on "state:lobby", ->
+    socket.emit "state:all:score", STATE.score
+    socket.emit "state:all:users", STATE.users
 
-  socket.on "play", ->
+  socket.on "state:playing", ->
+    STATE.isPlaying = true
+
+    socket.on "disconnect", _lose socket
+
     unless STATE.gameLoopI > 0
-      # When the 'leader' disconnects
-      socket.on "disconnect", _lose
       # Only send turns to the 'leader'
       STATE.gameLoopI = setInterval ->
-        io.sockets.emit "turn",  ["bop", "twist", "pull"][randomInt 0, 2]
+        io.sockets.emit "state:playing:turn", [
+          "bop", "twist", "pull"
+        ][randomInt 0, 2]
       , 2000
 
+  socket.on "state:gameOver", _lose socket
 
-  _lose = ->
-    clearInterval STATE.gameLoopI
-    socket.emit "score", STATE.score
-    socket.emit "users", STATE.users
-    socket.emit "gameOver"
-    STATE = makeState()
+  socket.on "state:playing:point", (action) ->
+    if STATE.isPlaying
+      STATE.score++
+      io.sockets.emit("state:all:score", STATE.score)
 
-  socket.on "lose", _lose
+      if STATE.score % SETTINGS.numTurns is 0
 
-  socket.on "point", (action) ->
-    STATE.score++
-    io.sockets.emit("score", STATE.score)
+        STATE.users[STATE.currentUser].current = false
+        STATE.currentUser = STATE.getNextUser()
+        STATE.users[STATE.currentUser].current = true
 
-    if STATE.score % SETTINGS.numTurns is 0
-
-      STATE.users[STATE.currentUser].current = false
-      STATE.currentUser = STATE.getNextUser()
-      STATE.users[STATE.currentUser].current = true
-
-      io.sockets.emit("users", STATE.users)
-
+        io.sockets.emit("state:all:users", STATE.users)
 
 exports.bopit = (req, res) ->
   res.json bopit: true

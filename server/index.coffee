@@ -4,15 +4,9 @@ express = require "express"
 
 q       = require "q"
 
-passport = require 'passport' 
-
-TwitterStrategy = require('passport-twitter').Strategy
-
 exports.app    = app    = express()
 exports.server = server = require("http").createServer app
 exports.io     = io     = require("socket.io").listen server, log: false
-
-exports.db     = db     = require "mysql-promise"
 
 
 cacheTime = 86400000
@@ -52,32 +46,11 @@ app.configure ->
     res.setHeader "Pragma"       , "no-cache"
     next()
 
-
-  app.use (req, res) ->
-    res.locals = req.session
-
-
   app.use express.urlencoded()
   app.use express.methodOverride()
   app.use express.json()
 
   app.use app.router
-
-  db.configure
-    host:     'localhost'
-    user:     'bopit'
-    password: process.env.DB_PASSWORD
-    database: 'bopit'
-
-# Twitter OAuth stuff
-
-passport.use(new TwitterStrategy({
-    consumerKey: 'LMCNe4nVK8CP2bAhOw2xQ',
-    consumerSecret: 'Dh1Y9RoCBc9OEGfgPg4mIg1KxFXeEPjlLqyo4NFgePw',
-    callbackURL: "http://localhost:8000/auth/twitter/callback"
-  }, (token, tokenSecret, profile, done) ->
-    done(null, profile)
-));
 
 
 # Start server
