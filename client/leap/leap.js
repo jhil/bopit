@@ -3,8 +3,18 @@ bopit = angular.module('bopitApp')
     leap = new Leap.Controller();
 
     var arePlaying = false;
-
     var normalFlag = false;
+
+    controller.on('disconnect', function() {
+      $('.connected').hide();
+      $('.disconnected').show();
+    });
+    
+    controller.on('connect', function() {
+      $('.connected').show();
+      $('.disconnected').hide();
+    });
+
     return leap.loop(function(frame){
         if(frame.hands.length > 0) {
             var hand = frame.hands[0];
