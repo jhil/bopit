@@ -4,6 +4,7 @@ express = require "express"
 
 q       = require "q"
 
+
 passport = require 'passport' 
 
 TwitterStrategy = require('passport-twitter').Strategy
@@ -11,8 +12,6 @@ TwitterStrategy = require('passport-twitter').Strategy
 exports.app    = app    = express()
 exports.server = server = require("http").createServer app
 exports.io     = io     = require("socket.io").listen server, log: false
-
-exports.db     = db     = require "mysql-promise"
 
 
 cacheTime = 86400000
@@ -56,35 +55,26 @@ app.configure ->
   app.use express.methodOverride()
   app.use express.json()
 
-
   app.use express.cookieParser()
-  app.use express.bodyParser()
   app.use express.session({ secret: 'keyboard cat' })
   app.use passport.initialize()
   app.use passport.session()
-
   app.use app.router
 
-  db.configure
-    host:     'localhost'
-    user:     'bopit'
-    password: process.env.DB_PASSWORD
-    database: 'bopit'
 
 # Twitter OAuth stuff
 
 app.get '/auth/twitter', passport.authenticate('twitter'), (req, res) -> return
 app.get '/auth/twitter/callback', passport.authenticate('twitter', { successRedirect: '/play', failureRedirect: '/' }), (req, res) -> return
 
-passport.use(new TwitterStrategy({
-    consumerKey: 'LMCNe4nVK8CP2bAhOw2xQ',
-    consumerSecret: 'Dh1Y9RoCBc9OEGfgPg4mIg1KxFXeEPjlLqyo4NFgePw',
-    callbackURL: "http://localhost:8000/auth/twitter/callback"
-  }, (token, tokenSecret, profile, done) ->
+passport.use new TwitterStrategy
+    consumerKey: 'LMCNe4nVK8CP2bAhOw2xQ'
+    consumerSecret: 'Dh1Y9RoCBc9OEGfgPg4mIg1KxFXeEPjlLqyo4NFgePw'
+    callbackURL: "http://localhost:#{process.env.PORT or 8000}/auth/twitter/callback"
+  , (token, tokenSecret, profile, done) ->
     process.nextTick () ->
       console.log(profile)
       return done null, profile
-));
 
 passport.serializeUser (user, done)->
   done(null, user)

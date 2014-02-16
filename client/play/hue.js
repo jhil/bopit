@@ -19,8 +19,13 @@ bopit = angular.module('bopitApp')
 
 
     //FAIL LIGHTS
-        
+        var commandurlLightFail11 = 'http://10.20.206.119/api/newdeveloper/lights/1/pointsymbol';
+        var commandurlLightFail12 = 'http://10.20.206.119/api/newdeveloper/lights/2/pointsymbol';
+        var commandurlLightFail13 = 'http://10.20.206.119/api/newdeveloper/lights/3/pointsymbol';
+        var messagebodyFail1 = '{"1":"0A00F1F01F1F1001F1FF100000000001F2F"}';
 
+        var commandurlLightFail21 = 'http://10.20.206.119/api/newdeveloper/groups/0/transmitsymbol';
+        var messagebodyFail2 = '{"symbolselection":"01010501010102010301040105","duration":2000}';
 
     function getHTML(command, commandurl, messagebody)
     {
@@ -41,7 +46,10 @@ bopit = angular.module('bopitApp')
         return false;
     }
 
-
+    // getHTML(commandLight, commandurlLightFail11, messagebodyFail1);
+    // getHTML(commandLight, commandurlLightFail12, messagebodyFail1);
+    // getHTML(commandLight, commandurlLightFail13, messagebodyFail1);
+    // getHTML(commandLight, commandurlLightFail21, messagebodyFail2);
 
     $rootScope.$on("bop", function() {
         getHTML(commandLight, commandurlLight, messagebodyPurple);

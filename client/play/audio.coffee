@@ -1,6 +1,6 @@
 angular.module('bopitApp')
 
-  .factory "bopitAudio", ->
+  .factory "bopitAudio", ($rootScope, $timeout) ->
 
     sounds = [
       "bop"
@@ -13,6 +13,16 @@ angular.module('bopitApp')
     for sound in sounds
       sounds_[sound] = new buzz.sound "/audio/sound-#{sound}.mp3"
 
+    sounds_.gameOver = do ->
+      ss = [
+        new buzz.sound "/audio/yell.mp3"
+        new buzz.sound "/audio/fail.mp3"
+        new buzz.sound "/audio/insult.mp3"
+      ]
+      ss[..-2].map (s, i) ->
+        s.bind "ended", -> ss[i+1].play()
+      ss[0]
+
     sounds_.queueTurn = (prevSound, command) ->
       ss = [
         new buzz.sound "/audio/command-#{command}.mp3"
@@ -21,17 +31,29 @@ angular.module('bopitApp')
         new buzz.sound "/audio/fill.mp3"
       ]
 
-      ss[0..-2].forEach (s, i) ->
-        s.bind 'ended', ->
-          ss[i+1].play()
+      ss[0].bind "ended", ->
+        ss[1].play()
+
+      ss[1].bind "ended", ->
+        ss[2].play()
+        $timeout ->
+          $rootScope.$emit "cantLose"
+        , 0.5 * (ss[1].getDuration() * 1000)
+
+
+      ss[2].bind "ended", ->
+        ss[3].play()
+
+      ss[3].bind "ended", ->
 
       if prevSound.isEnded()
         ss[0].play()
+        $rootScope.$emit "mightLose", command
       else
-        prevSound.bind 'ended', ->
-          ss[0].play()
+        prevSound.bind "ended", -> ss[0].play()
+        $rootScope.$emit "mightLose", command
 
-      ss[ss.length-1]
+      ss
 
     sounds_
 
