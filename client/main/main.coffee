@@ -1,21 +1,29 @@
 angular.module('bopitApp')
   .controller 'MainCtrl', ($scope, $http, $window, leapController) ->
+	connected = false
 
-    $scope.twitterAuth = -> $window.location.href = "/auth/twitter"
+	leapController.connect()
 
-    connected = false
+	$('.connected').hide()
+	leapController.on 'deviceDisconnected', () ->
+		$('.connected').hide()
+		$('.disconnected').fadeIn("slow")
 
-    leapController.connect()
+	leapController.on 'deviceConnected', () ->
+		$('.connected').fadeIn("slow")
+		$('.disconnected').hide()
 
-    $('.connected').hide()
-    leapController.on 'deviceDisconnected', () ->
-      $('.connected').hide()
-      $('.disconnected').fadeIn("slow")
+	leapController.on 'deviceFrame', (fr) ->
+		connected = true
 
-    testConnect = () ->
-      if connected
-        $('.connected').show()
-        $('.disconnected').hide()
-      clearTimeout(testTimeout)
+	testConnect = () ->
+		if connected
+			$('.connected').show()
+			$('.disconnected').hide()
+		clearTimeout(testTimeout);
 
-    testTimeout = setTimeout testConnect, 1000
+	testTimeout = setTimeout testConnect, 1000
+
+	$scope.twitterAuth = -> $window.location.href = "/auth/twitter"
+
+	return
