@@ -1,24 +1,19 @@
 angular.module('bopitApp')
-  .controller 'MainCtrl', ($scope, $http) ->
+  .controller 'MainCtrl', ($scope, $http, leapController) ->
 
-	leap = new Leap.Controller();
+    leap.on 'deviceDisconnected', () ->
+      $('.connected').hide()
+      $('.disconnected').fadeIn("slow")
 
-	leap.on 'deviceDisconnected', () ->
-	  $('.connected').hide()
-	  $('.disconnected').fadeIn("slow")
+    leap.on 'deviceConnected', () ->
+      $('.connected').fadeIn("slow")
+      $('.disconnected').hide()
 
-	leap.on 'deviceConnected', () ->
-	  $('.connected').fadeIn("slow")
-	  $('.disconnected').hide()
+    leap.connect()
 
-	leap.connect()
-
-	if leap.timestamp == undefined
-	  $('.connected').hide()
-	  $('.disconnected').fadeIn("slow")
-	else
-	  $('.disconnected').hide()
-	  $('.connected').fadeIn("slow")
-
-	return
-
+    if leap.timestamp == undefined
+      $('.connected').hide()
+      $('.disconnected').fadeIn("slow")
+    else
+      $('.disconnected').hide()
+      $('.connected').fadeIn("slow")

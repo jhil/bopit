@@ -33,4 +33,7 @@ bopit = angular.module('bopitApp', [
     null
 
 .factory "bopitSock", ->
-  socket = io.connect()
+  io.connect()
+
+.factory "leapController", ->
+  new Leap.Controller()
