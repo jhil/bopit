@@ -49,6 +49,11 @@ io.sockets.on "connection", (socket) ->
   socket.emit "score", STATE.score
   socket.emit "users", STATE.users
 
+  socket.on "play", ->
+    setInterval ->
+      socket.emit "turn",  ["bop", "twist", "pull"][randomInt 0, 2]
+    , 2000
+
   socket.on "point", (action) ->
     STATE.score++
     io.sockets.emit("score", STATE.score)
@@ -60,8 +65,6 @@ io.sockets.on "connection", (socket) ->
       STATE.users[STATE.currentUser].current = true
 
       io.sockets.emit("users", STATE.users)
-
-    console.log action
 
 
 exports.bopit = (req, res) ->

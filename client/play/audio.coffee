@@ -13,13 +13,25 @@ angular.module('bopitApp')
     for sound in sounds
       sounds_[sound] = new buzz.sound "/audio/#{sound}.mp3"
 
-    sounds_.buildTurn = (call, response) ->
+    sounds_.queueTurn = (prevSound, command) ->
       ss = [
-        new buzz.sound "/audio/#{call}.mp3"
+        new buzz.sound "/audio/command-#{command}.mp3"
         new buzz.sound "/audio/fill.mp3"
-        new buzz.sound "/audio/#{response}.mp3"
+        new buzz.sound "/audio/break.mp3"
         new buzz.sound "/audio/fill.mp3"
       ]
+
+      ss[0..-2].forEach (s, i) ->
+        s.bind 'ended', ->
+          ss[i+1].play()
+
+      if prevSound.isEnded()
+        ss[0].play()
+      else
+        prevSound.bind 'ended', ->
+          ss[0].play()
+
+      ss[ss.length-1]
 
     sounds_
 
