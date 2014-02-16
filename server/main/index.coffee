@@ -1,4 +1,5 @@
 {check}            = require "validator"
+
 q                  = require "q"
 
 {email_server, io} = require "../"
@@ -68,7 +69,6 @@ io.sockets.on "connection", (socket) ->
     socket.on "disconnect", _lose socket
 
     unless STATE.gameLoopI > 0
-      # Only send turns to the 'leader'
       STATE.gameLoopI = setInterval ->
         io.sockets.emit "state:playing:turn", [
           "bop", "twist", "pull"

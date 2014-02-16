@@ -11,12 +11,15 @@ bopit = angular.module('bopitApp', [
       controller: 'MainCtrl'
     .when '/play',
       templateUrl: 'play/playView.html'
-      controller: 'MainCtrl'
+      #controller: 'MainCtrl'
+    .when '/auth/twitter',
+      redirectTo: '/auth/twitter'
     .when '/404',
       templateUrl: 'layout/404/index.html'
       controller: '404Ctrl'
     .otherwise
       redirectTo: '/404'
+
   $locationProvider.html5Mode(true)
 
 .controller "BodyCtrl", ($http, $scope, $rootScope, $timeout) ->

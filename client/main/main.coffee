@@ -1,5 +1,5 @@
 angular.module('bopitApp')
-  .controller 'MainCtrl', ($scope, $http, leapController) ->
+  .controller 'MainCtrl', ($scope, $http, $window, leapController) ->
 	connected = false
 
 	leapController.connect()
@@ -20,7 +20,10 @@ angular.module('bopitApp')
 		if connected
 			$('.connected').show()
 			$('.disconnected').hide()
+		clearTimeout(testTimeout);
 
-	setTimeout testConnect, 1000
+	testTimeout = setTimeout testConnect, 1000
+
+	$scope.twitterAuth = -> $window.location.href = "/auth/twitter"
 
 	return
