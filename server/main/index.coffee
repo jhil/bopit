@@ -4,18 +4,26 @@ q                  = require "q"
 {db, email_server, io} = require "../"
 
 
-io.sockets.on "connection", (socket) ->
+SETTINGS =
+  numTurns: 5
 
-  socket.emit "score", score
-  socket.emit "users", users
-
-  socket.on "point", (action) ->
-    score++
-    io.sockets.emit "score", score
-    console.log action
+  numUsers: 4
 
 
-users = [
+STATE =
+  score:       0
+
+  currentUser: 0
+
+  getNextUser: ->
+    if STATE.currentUser is (SETTINGS.numUsers-1)
+    then 0
+    else STATE.currentUser+1
+
+  users:       []
+
+
+STATE.users = [
   name: 'jhilmd'
   current: true
 ,
@@ -29,7 +37,24 @@ users = [
   current: false
 ]
 
-score = 0
+
+io.sockets.on "connection", (socket) ->
+  socket.emit "score", STATE.score
+  socket.emit "users", STATE.users
+
+  socket.on "point", (action) ->
+    STATE.score++
+    io.sockets.emit("score", STATE.score)
+
+    if STATE.score % SETTINGS.numTurns is 0
+
+      STATE.users[STATE.currentUser].current = false
+      STATE.currentUser = STATE.getNextUser()
+      STATE.users[STATE.currentUser].current = true
+
+      io.sockets.emit("users", STATE.users)
+
+    console.log action
 
 
 exports.bopit = (req, res) ->
