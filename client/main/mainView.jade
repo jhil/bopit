@@ -1,9 +1,14 @@
 #main(ng-show="isLoaded" role="main")
+
+  #teaser
+    img#teaser-toy(src="images/bopit-toy.svg")
+        
   #header
     h1 bop it <span>x</span> leap motion 
 
   #main-inner
     .row.status
+      img#check(src="images/check.svg")
       p leap motion hooked up!
     .row.connect
       a(ng-href="/play")
