@@ -46,11 +46,6 @@ bopit = angular.module('bopitApp')
         return false;
     }
 
-    // getHTML(commandLight, commandurlLightFail11, messagebodyFail1);
-    // getHTML(commandLight, commandurlLightFail12, messagebodyFail1);
-    // getHTML(commandLight, commandurlLightFail13, messagebodyFail1);
-    // getHTML(commandLight, commandurlLightFail21, messagebodyFail2);
-
     $rootScope.$on("bop", function() {
         getHTML(commandLight, commandurlLight, messagebodyPurple);
     });
@@ -61,5 +56,12 @@ bopit = angular.module('bopitApp')
 
     $rootScope.$on("twist", function() {
         getHTML(commandLight, commandurlLight, messagebodyYellow);
+    });
+
+    $rootScope.$on("gameOver", function() {
+        getHTML(commandLight, commandurlLightFail11, messagebodyFail1);
+        getHTML(commandLight, commandurlLightFail12, messagebodyFail1);
+        getHTML(commandLight, commandurlLightFail13, messagebodyFail1);
+        getHTML(commandLight, commandurlLightFail21, messagebodyFail2);
     });
 });
