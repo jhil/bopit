@@ -36,8 +36,8 @@ bopit = angular.module('bopitApp')
                         bopitSock.emit("state:playing:point", "Bop it!");
                         bopitAudio.bop.play();
                         var toyBop = $('#toyBop');
-                        toyBop.animate({ "margin-left": "+=35px", "margin-top": "+=10px", "height": "-=20px" }, "fast") ;
-                        toyBop.animate({ "margin-left": "-=35px", "margin-top": "-=10px", "height": "+=20px" }, "fast") ;
+                        toyBop.animate({ "margin-left": "+=66px", "margin-top": "+=20px", "height": "-=40px" }, "fast") ;
+                        toyBop.animate({ "margin-left": "-=66px", "margin-top": "-=20px", "height": "+=40px" }, "fast") ;
                     } else {
                         arePlaying = true;
                         $rootScope.$emit("play");
