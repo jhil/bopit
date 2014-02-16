@@ -9,6 +9,7 @@ bopit = angular.module('bopitApp')
       $('.connected').hide();
       $('.disconnected').show();
     });
+    
     controller.on('connect', function() {
       $('.connected').show();
       $('.disconnected').hide();

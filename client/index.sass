@@ -93,7 +93,6 @@ body
   padding: 0 1em
   border-bottom: 5px solid $color_purple 
 
-
 .players
   color: $color_gray-light
   ul
@@ -110,13 +109,10 @@ body
     content: "@"
 
 li.current
-  color: $color_purple
   border: 1px solid $color_green
 
-.dead
-  color: $color_gray-light
-  .bar
-    background: $color_gray-light
+li.you
+  color: $color_purple
 
 // MAIN TOY
 
@@ -166,11 +162,15 @@ li.current
     margin: 16em 0 4em
 
 .status
-  color: $color_green
   display: inline
   p
     margin-left: 1em
     display: inline-block
+.connected
+  color: $color_green
+.disconnected
+  color: $color_gray-light
+
 
 #teaser
   position: absolute
