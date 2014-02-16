@@ -4,7 +4,7 @@
       h2 {{score}}
     .row.players
       ul
-        li(ng-repeat="user in users", ng-class="{current: user.current}")
+        li.p(ng-repeat="user in users", ng-class="{current: user.current}")
           | {{ user.name }}
 
   #main-inner
