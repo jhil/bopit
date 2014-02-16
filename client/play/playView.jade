@@ -1,7 +1,7 @@
 #main(ng-show="isLoaded" role="main")
   #header(ng-controller="GameStateCtrl")
     .row.score
-      h1 {{score}}
+      h2 {{score}}
     .row.players
       ul
         li(ng-repeat="user in users", ng-class="{current: user.current}")
@@ -21,7 +21,6 @@
     #leap(ng-controller="LeapCtrl" ng-init="leapDebug = true")
       .leap#leapUI(ng-show="leapDebug")
         span.text-valign
-          h2
       .leap(ng-show="leapDebug")
         h1 {{ output }}
       .leap#leapCanvas

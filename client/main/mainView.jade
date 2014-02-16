@@ -1,12 +1,10 @@
 #main(ng-show="isLoaded" role="main")
   #header
-    .row
-      h1 jeff make this pretty
+    h1 bop it <span>x</span> leap motion 
 
   #main-inner
-    .row
-      h2 plz jeff
-
-    .row
+    .row.status
+      p leap motion hooked up!
+    .row.connect
       a(ng-href="/play")
-        button.btn.btn-default click here tho
+        img#twitterConnect(src="images/twitter-connect.svg")
