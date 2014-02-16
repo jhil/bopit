@@ -1,13 +1,6 @@
 bopit = angular.module('bopitApp')
-.controller("LeapCtrl", function(bopitSock) {
+.controller("LeapCtrl", function(bopitSock, bopitAudio) {
     leap = new Leap.Controller();
-
-    var bopAudio = document.createElement('audio');
-    bopAudio.setAttribute('src', '/audio/sound-bop.mp3');
-    var pullAudio = document.createElement('audio');
-    pullAudio.setAttribute('src', '/audio/sound-pull.mp3');
-    var twistAudio = document.createElement('audio');
-    twistAudio.setAttribute('src', '/audio/sound-twist.mp3');
 
     var normalFlag = false;
     return leap.loop(function(frame){
@@ -17,7 +10,7 @@ bopit = angular.module('bopitApp')
             if(hand.pitch() < -0.2) {
                 if(normalFlag){
                     bopitSock.emit("point", "Twist it!");
-                    twistAudio.play();
+                    bopitAudio.twist.play();
                     $('#toyStripes').animate({ "margin-top": "-=60px" }, "fast" );
                     $('#toyStripes').animate({ "margin-top": "+=60px" }, "fast" );
                 }
@@ -25,7 +18,7 @@ bopit = angular.module('bopitApp')
             } else if(hand.stabilizedPalmPosition[0] > 100) {
                 if(normalFlag){
                     bopitSock.emit("point", "Pull it!");
-                    pullAudio.play();
+                    bopitAudio.pull.play();
                     $('#toyPull').animate({ "margin-left": "+=60px" }, "fast" );
                     $('#toyPull').animate({ "margin-left": "-=60px" }, "fast" );
                 }
@@ -33,7 +26,7 @@ bopit = angular.module('bopitApp')
             } else if(Math.abs(hand.stabilizedPalmPosition[0]) < 30 && hand.stabilizedPalmPosition[2] < -10) {
                 if(normalFlag){
                     bopitSock.emit("point", "Bop it!");
-                    bopAudio.play();
+                    bopitAudio.bop.play();
                     var toyBop = $('#toyBop');
                     toyBop.animate({ "margin-left": "+=35px", "margin-top": "+=10px", "height": "-=20px" }, "fast") ;
                     toyBop.animate({ "margin-left": "-=35px", "margin-top": "-=10px", "height": "+=20px" }, "fast") ;

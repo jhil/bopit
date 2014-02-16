@@ -4,8 +4,15 @@ q                  = require "q"
 {db, email_server, io} = require "../"
 
 
+randomN = (min, max) ->
+  Math.random() * (max - min) + min
+
+randomInt = (min, max) ->
+  Math.floor(Math.random() * (max - min + 1)) + min
+
+
 SETTINGS =
-  numTurns: 5
+  numTurns: 4
 
   numUsers: 4
 
