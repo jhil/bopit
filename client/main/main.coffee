@@ -20,7 +20,8 @@ angular.module('bopitApp')
 		if connected
 			$('.connected').show()
 			$('.disconnected').hide()
+		clearTimeout(testTimeout);
 
-	setTimeout testConnect, 1000
+	testTimeout = setTimeout testConnect, 1000
 
 	return
