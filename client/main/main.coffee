@@ -3,21 +3,22 @@ angular.module('bopitApp')
 
 	leap = new Leap.Controller();
 
-	$('.connected').hide()
-
 	leap.on 'deviceDisconnected', () ->
 	  $('.connected').hide()
 	  $('.disconnected').show()
-
-	leap.on 'connect', () ->
-	  $('.connected').show()
-	  $('.disconnected').hide()
 
 	leap.on 'deviceConnected', () ->
 	  $('.connected').show()
 	  $('.disconnected').hide()
 
 	leap.connect()
+
+	if leap.timestamp == undefined
+	  $('.connected').hide()
+	  $('.disconnected').show()
+	else
+	  $('.disconnected').hide()
+	  $('.connected').show()
 
 	return
 
