@@ -7,10 +7,17 @@
   #header
     h1 bop it <span>x</span> leap motion 
 
-  #main-inner
-    .row.status
+  #main-inner(ng-controller="MainCtrl")
+    .row.status.connected
       img#check(src="images/check.svg")
-      p leap motion hooked up!
+      p leap motion is ready to go!
+    .row.status.disconnected
+      .loading
+        div
+        div
+        div
+        div
+      p searching for leap motion
     .row.connect
       a(ng-href="/play")
         img#twitterConnect(src="images/twitter-connect.svg")
