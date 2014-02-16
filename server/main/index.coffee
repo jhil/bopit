@@ -18,16 +18,16 @@ SETTINGS =
 
 
 STATE =
+  isPlaying:   false
+  isAlive:     true
   score:       0
-
   currentUser: 0
+  users:       []
 
   getNextUser: ->
     if STATE.currentUser is (SETTINGS.numUsers-1)
     then 0
     else STATE.currentUser+1
-
-  users:       []
 
 
 STATE.users = [
