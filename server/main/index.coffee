@@ -13,7 +13,7 @@ randomInt = (min, max) ->
 
 
 SETTINGS =
-  numTurns: 4
+  numTurns: 16
 
 
 makeState = ->

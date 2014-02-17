@@ -18,5 +18,13 @@
         div
         div
       p searching for leap motion
-    .row.connect
+    .row.connected
       img#twitterConnect(src="images/twitter-connect.svg" ng-click="twitterAuth()")
+    .row.disconnected
+      a(ng-href="/play")
+        h3
+          button.btn.btn-info connect
+    .row.status.disconnected
+      h4 no leap motion? :(
+      p that's ok, you can like just use the keyboard:
+        | b = bop it | t = twist it | p = pull it

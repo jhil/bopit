@@ -92,3 +92,8 @@ angular.module('bopitApp')
         roundState.gestures++
         if roundState.gestures > 1
           $rootScope.$emit "cantLose"
+
+
+    Mousetrap.bind "b", -> $rootScope.$emit "gesture:bop"
+    Mousetrap.bind "p", -> $rootScope.$emit "gesture:pull"
+    Mousetrap.bind "t", -> $rootScope.$emit "gesture:twist"
