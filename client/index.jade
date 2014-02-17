@@ -9,7 +9,14 @@ html(ng-app="bopitApp")
     meta(name="description", content="Bop It!")
     meta(name="viewport",    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
 
-    link(rel="shortcut icon", href="favicon.ico?v=2", type="image/x-icon")
+    meta(property="og:site_name",   content="Bop It!")
+    meta(property="og:title",       content="Bop It!")
+    meta(property="og:url",         content="http://bopit.io")
+    meta(property="og:type",        content="website")
+    meta(property="og:description", content="Massively-multiplayer bop it for Leap Motion.")
+    meta(property="og:image",       content="http://bopit.io/images/bopitio_fb.png")
+
+    link(rel="shortcut icon", href="favicon.ico", type="image/x-icon")
 
     <!-- build:css(./) styles/vendor.css -->
     link(rel="stylesheet" href="components/jquery-ui/themes/base/jquery-ui.css")
