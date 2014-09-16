@@ -16,7 +16,7 @@
     "angular-animate": "~1.2.12",
     "animate.css": "~3.0.0",
     "jquery": "~2.1.0",
-    "d3js": "*",
+    "d3": "*",
     "leapjs": "~0.4.1",
     "buzz": "~1.1.0",
     "mousetrap": "~1.4.6"
