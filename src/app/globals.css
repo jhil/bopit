@@ -1,0 +1,224 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;800&display=swap");
+:root {
+  color-scheme: dark;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  color: #f5f2f9;
+  background: #18151f;
+  font-family: "Barlow", sans-serif;
+}
+main {
+  max-width: 1104px;
+  margin: auto;
+  padding: 0 24px;
+}
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 0;
+}
+.wordmark {
+  font-size: 32px;
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: -2px;
+  color: white;
+}
+.wordmark span {
+  color: #ba9be4;
+}
+.scores {
+  display: flex;
+  gap: 32px;
+  font-size: 14px;
+  color: #aaa1b8;
+  text-align: right;
+}
+.scores strong {
+  color: white;
+  display: block;
+  font-size: 28px;
+  font-variant-numeric: tabular-nums;
+}
+.game {
+  text-align: center;
+}
+.call {
+  min-height: 180px;
+  padding: 24px 0;
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 12px;
+  color: #ba9be4;
+}
+h1 {
+  font-size: clamp(48px, 8vw, 88px);
+  line-height: 1;
+  letter-spacing: -3px;
+  margin: 16px 0;
+}
+.call p:last-child {
+  color: #bcb3c9;
+  min-height: 24px;
+  margin-bottom: 0;
+}
+.toy {
+  margin: 16px auto;
+  max-width: 900px;
+}
+.toy img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.timer {
+  height: 4px;
+  background: #393140;
+  margin: 24px 0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+.timer div {
+  height: 100%;
+  background: #ba9be4;
+  animation: countdown linear forwards;
+  transform-origin: left;
+}
+@keyframes countdown {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+.controls {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+  min-height: 48px;
+  border-radius: 12px;
+  border: 1px solid #5b4e6a;
+  background: transparent;
+  color: inherit;
+  padding: 16px 24px;
+  touch-action: manipulation;
+}
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #d5b9f8;
+  outline-offset: 4px;
+}
+.action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 600;
+  transition:
+    background 0.1s,
+    transform 0.1s;
+}
+.action:hover:not(:disabled) {
+  background: #302439;
+}
+.action:active:not(:disabled) {
+  transform: translateY(2px);
+}
+.action.bop {
+  border-color: #b78ce0;
+  color: #d2b2f0;
+}
+.action.pull {
+  border-color: #b6bb51;
+  color: #d0d986;
+}
+.action.twist {
+  border-color: #5ba990;
+  color: #a1ddc8;
+}
+.action:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+kbd {
+  font:
+    12px ui-monospace,
+    monospace;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+.round-controls {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+.start {
+  background: #ba9be4;
+  border-color: #ba9be4;
+  color: #20152e;
+  font-weight: 600;
+}
+footer {
+  text-align: center;
+  color: #aaa1b8;
+  font-size: 13px;
+  line-height: 1.7;
+  padding: 0 0 32px;
+}
+a {
+  color: inherit;
+  text-underline-offset: 4px;
+}
+.notice {
+  max-width: 600px;
+  margin: 24px auto;
+  color: #d0d986;
+}
+@media (max-width: 600px) {
+  header {
+    padding: 24px 0;
+  }
+  .call {
+    min-height: 160px;
+  }
+  .controls {
+    gap: 8px;
+  }
+  .action {
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 8px;
+    font-size: 20px;
+  }
+  .toy {
+    margin: 24px -16px;
+  }
+  .scores {
+    gap: 16px;
+  }
+  footer {
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .action {
+    transition: none;
+  }
+  .timer div {
+    animation: none;
+  }
+}
