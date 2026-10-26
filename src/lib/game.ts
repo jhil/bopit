@@ -12,7 +12,7 @@ export const idleGame: Game = {
   command: "bop",
   score: 0,
   deadline: 0,
-  message: "Ready when you are.",
+  message: "",
 }
 export function turnDuration(score: number) {
   return Math.max(700, 2400 - score * 45)

@@ -3,6 +3,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="1380px" height="420px" viewBox="0 0 1380 420" enable-background="new 0 0 1380 420" xml:space="preserve">
+<defs><clipPath id="twist-grip-clip"><use href="#twist-grip"/></clipPath></defs>
 <g>
 	<g>
 		<path fill="#89CFE5" d="M1380,195c0-36.281-25.767-66.545-60-73.497V120l-3.727,0.844c-3.677-0.551-7.441-0.844-11.273-0.844
@@ -30,7 +31,7 @@
 		<circle fill="none" cx="690" cy="210" r="120"/>
 	</g>
 	<g>
-		<path fill="#FFE566" d="M14.849,297.879C6.649,299.051,0,293.285,0,285V135c0-8.285,6.649-14.051,14.849-12.879L180,150v120
+		<path id="twist-grip" fill="#FFE566" d="M14.849,297.879C6.649,299.051,0,293.285,0,285V135c0-8.285,6.649-14.051,14.849-12.879L180,150v120
 			L14.849,297.879z"/>
 	</g>
 	<g>
@@ -110,23 +111,23 @@
 	</g>
 	<g>
 		
-			<rect x="42" y="89.066" transform="matrix(0.9923 0.124 -0.124 0.9923 26.3948 -3.9599)" fill="#FFFFFF" width="5.999" height="241.868"/>
+			<rect clip-path="url(#twist-grip-clip)" x="42" y="89.066" transform="matrix(0.9923 0.124 -0.124 0.9923 26.3948 -3.9599)" fill="#FFFFFF" width="5.999" height="241.868"/>
 	</g>
 	<g>
 		
-			<rect x="72" y="89.066" transform="matrix(0.9923 0.124 -0.124 0.9923 26.6265 -7.681)" fill="#FFFFFF" width="5.999" height="241.868"/>
+			<rect clip-path="url(#twist-grip-clip)" x="72" y="89.066" transform="matrix(0.9923 0.124 -0.124 0.9923 26.6265 -7.681)" fill="#FFFFFF" width="5.999" height="241.868"/>
 	</g>
 	<g>
 		
-			<rect x="102" y="89.066" transform="matrix(0.9923 0.124 -0.124 0.9923 26.8581 -11.402)" fill="#FFFFFF" width="5.999" height="241.868"/>
+			<rect clip-path="url(#twist-grip-clip)" x="102" y="89.066" transform="matrix(0.9923 0.124 -0.124 0.9923 26.8581 -11.402)" fill="#FFFFFF" width="5.999" height="241.868"/>
 	</g>
 	<g>
 		
-			<rect x="132" y="89.066" transform="matrix(0.9923 0.124 -0.124 0.9923 27.0898 -15.123)" fill="#FFFFFF" width="5.999" height="241.868"/>
+			<rect clip-path="url(#twist-grip-clip)" x="132" y="89.066" transform="matrix(0.9923 0.124 -0.124 0.9923 27.0898 -15.123)" fill="#FFFFFF" width="5.999" height="241.868"/>
 	</g>
 	<g>
 		
-			<rect x="154.5" y="209.533" transform="matrix(0.9923 0.124 -0.124 0.9923 34.7056 -17.4505)" fill="#FFFFFF" width="5.999" height="120.934"/>
+			<rect clip-path="url(#twist-grip-clip)" x="162" y="89.066" transform="matrix(0.9923 0.124 -0.124 0.9923 27.3214 -18.844)" fill="#FFFFFF" width="5.999" height="241.868"/>
 	</g>
 	<g>
 		<g>

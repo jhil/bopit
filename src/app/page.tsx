@@ -48,9 +48,7 @@ export default function BopIt() {
         await context.current.resume()
         cues.current ??= await loadCues(context.current)
       } catch {
-        setNotice(
-          "Voice cues could not load. Follow the words to play, or try sound again later.",
-        )
+        setNotice("Voice cues unavailable.")
       }
     }
     if (id === session.current)
@@ -162,11 +160,6 @@ export default function BopIt() {
       </header>
       <section className="game" aria-label="Bop It game">
         <div className="call">
-          <p className="eyebrow">
-            {game.status === "playing"
-              ? "The call"
-              : "A game of quick reactions"}
-          </p>
           <h1 aria-live="assertive">
             {game.status === "playing"
               ? `${game.command} it!`
@@ -174,20 +167,28 @@ export default function BopIt() {
                 ? "Get ready"
                 : game.status === "over"
                   ? "Game over"
-                  : "Keep up."}
+                  : ""}
           </h1>
-          <p role="status">
-            {game.message || "Follow the voice or the words."}
-          </p>
+          <p role="status">{game.message}</p>
         </div>
         <div className="toy">
           <Image
             src="/images/bopit-toy.svg"
-            alt="The original Bop It toy, with bop, pull, and twist controls"
+            alt="Bop It"
             width={1380}
             height={420}
             priority
           />
+          {actions.map((action) => (
+            <button
+              className={`toy-control ${action}`}
+              key={action}
+              aria-label={`${action} it`}
+              aria-keyshortcuts={action[0].toUpperCase()}
+              disabled={game.status !== "playing"}
+              onClick={() => submit(action)}
+            />
+          ))}
         </div>
         <div className="timer" aria-hidden="true">
           {game.status === "playing" && (
@@ -197,25 +198,12 @@ export default function BopIt() {
             />
           )}
         </div>
-        <div className="controls">
-          {actions.map((action) => (
-            <button
-              className={`action ${action}`}
-              key={action}
-              disabled={game.status !== "playing"}
-              onClick={() => submit(action)}
-            >
-              <span>{action} it</span>
-              <kbd>{action[0].toUpperCase()}</kbd>
-            </button>
-          ))}
-        </div>
         <div className="round-controls">
           {game.status === "playing" || game.status === "loading" ? (
-            <button onClick={stop}>Stop round</button>
+            <button onClick={stop}>Stop</button>
           ) : (
             <button className="start" onClick={() => void start()}>
-              {game.status === "over" ? "Play again" : "Start game"}
+              {game.status === "over" ? "Play again" : "Start"}
             </button>
           )}
           <button onClick={() => setSound(!sound)} aria-pressed={sound}>
@@ -228,16 +216,6 @@ export default function BopIt() {
           </p>
         )}
       </section>
-      <footer>
-        <p>
-          Press B, P, or T. On a touchscreen, tap the matching control. It gets
-          faster as you go.
-        </p>
-        <p>
-          A browser edition of the original Leap Motion experiment.{" "}
-          <a href="https://github.com/jhil/bopit">Source</a>
-        </p>
-      </footer>
     </main>
   )
 }

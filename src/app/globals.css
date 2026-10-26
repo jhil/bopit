@@ -52,12 +52,6 @@ header {
   min-height: 180px;
   padding: 24px 0;
 }
-.eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-size: 12px;
-  color: #ba9be4;
-}
 h1 {
   font-size: clamp(48px, 8vw, 88px);
   line-height: 1;
@@ -70,6 +64,7 @@ h1 {
   margin-bottom: 0;
 }
 .toy {
+  position: relative;
   margin: 16px auto;
   max-width: 900px;
 }
@@ -99,11 +94,6 @@ h1 {
     transform: scaleX(0);
   }
 }
-.controls {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
-}
 button {
   font: inherit;
   cursor: pointer;
@@ -120,45 +110,34 @@ a:focus-visible {
   outline: 3px solid #d5b9f8;
   outline-offset: 4px;
 }
-.action {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 24px;
-  font-weight: 600;
-  transition:
-    background 0.1s,
-    transform 0.1s;
+.toy-control {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 24px;
 }
-.action:hover:not(:disabled) {
-  background: #302439;
+.toy-control.twist {
+  left: 0;
+  width: 35%;
 }
-.action:active:not(:disabled) {
-  transform: translateY(2px);
+.toy-control.bop {
+  left: 35%;
+  width: 30%;
 }
-.action.bop {
-  border-color: #b78ce0;
-  color: #d2b2f0;
+.toy-control.pull {
+  left: 65%;
+  width: 35%;
 }
-.action.pull {
-  border-color: #b6bb51;
-  color: #d0d986;
-}
-.action.twist {
-  border-color: #5ba990;
-  color: #a1ddc8;
-}
-.action:disabled {
-  opacity: 0.4;
+.toy-control:disabled {
   cursor: default;
 }
-kbd {
-  font:
-    12px ui-monospace,
-    monospace;
-  border: 1px solid currentColor;
-  border-radius: 4px;
-  padding: 4px 8px;
+@media (hover: hover) and (pointer: fine) {
+  .toy-control:hover:not(:disabled) {
+    outline: 2px solid #d5b9f8;
+    outline-offset: 4px;
+  }
 }
 .round-controls {
   display: flex;
@@ -171,13 +150,6 @@ kbd {
   border-color: #ba9be4;
   color: #20152e;
   font-weight: 600;
-}
-footer {
-  text-align: center;
-  color: #aaa1b8;
-  font-size: 13px;
-  line-height: 1.7;
-  padding: 0 0 32px;
 }
 a {
   color: inherit;
@@ -195,30 +167,24 @@ a {
   .call {
     min-height: 160px;
   }
-  .controls {
-    gap: 8px;
-  }
-  .action {
-    flex-direction: column;
-    gap: 8px;
-    padding: 16px 8px;
-    font-size: 20px;
-  }
   .toy {
+    position: relative;
     margin: 24px -16px;
   }
   .scores {
     gap: 16px;
   }
-  footer {
-    font-size: 12px;
+}
+@keyframes countdown-fade {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .action {
-    transition: none;
-  }
   .timer div {
-    animation: none;
+    animation-name: countdown-fade;
   }
 }
