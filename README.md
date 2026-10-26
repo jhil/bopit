@@ -1,10 +1,10 @@
 # Bop It
 
-A browser reaction game using the original experiment’s toy artwork and voice cues.
+A browser reaction game using the original experiment’s toy artwork, voice cues, and background beat.
 
 Live at https://bopit.jeffand.co.
 
-Press B, P, or T, or tap the matching control. Correct responses score a point and make the next turn faster. Incorrect or late responses end the round. Escape stops the round. Switching away from the tab stops it rather than leaving the clock running unseen. High scores stay in this browser.
+Press B, P, or T, or click or tap the matching part of the toy. Correct responses score a point and make the next turn faster. Incorrect or late responses end the round. Escape stops the round. Switching away from the tab stops it rather than leaving the clock running unseen. The original fill recording loops underneath the voice cues during a round. Sound toggles both together. High scores stay in this browser.
 
 This edition requires no Leap Motion, Twitter account, server, or multiplayer lobby. The original Leap Motion source is preserved on the `legacy/leap-motion` branch.
 

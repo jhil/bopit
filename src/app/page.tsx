@@ -1,6 +1,5 @@
 "use client"
 import Image from "next/image"
-import Link from "next/link"
 import { useCallback, useEffect, useRef, useState } from "react"
 import {
   actions,
@@ -8,11 +7,10 @@ import {
   beginGame,
   idleGame,
   randomAction,
-  turnDuration,
   type Action,
   type Game,
 } from "../lib/game"
-import { loadCues } from "../lib/audio"
+import { loadAudio } from "../lib/audio"
 
 export default function BopIt() {
   const [game, setGame] = useState<Game>(idleGame)
@@ -20,11 +18,12 @@ export default function BopIt() {
   const [sound, setSound] = useState(true)
   const [notice, setNotice] = useState("")
   const context = useRef<AudioContext | null>(null)
-  const cues = useRef<Awaited<ReturnType<typeof loadCues>> | null>(null)
+  const audio = useRef<Awaited<ReturnType<typeof loadAudio>> | null>(null)
   const voice = useRef<AudioBufferSourceNode | null>(null)
   const session = useRef(0)
 
   useEffect(() => {
+    const generation = session
     try {
       const saved = Number(localStorage.getItem("bopit-best"))
       if (Number.isSafeInteger(saved) && saved >= 0) setBest(saved)
@@ -32,11 +31,31 @@ export default function BopIt() {
       setNotice("Your high score cannot be saved in this browser.")
     }
     return () => {
-      session.current++
+      generation.current++
       voice.current?.stop()
       void context.current?.close()
     }
   }, [])
+
+  const prepareAudio = useCallback(async () => {
+    context.current ??= new AudioContext()
+    await context.current.resume()
+    audio.current ??= await loadAudio(context.current)
+  }, [])
+
+  const toggleSound = async () => {
+    if (sound) {
+      setSound(false)
+      return
+    }
+    try {
+      await prepareAudio()
+      setNotice("")
+      setSound(true)
+    } catch {
+      setNotice("Sound unavailable.")
+    }
+  }
 
   const start = useCallback(async () => {
     const id = ++session.current
@@ -44,16 +63,15 @@ export default function BopIt() {
     setGame({ ...idleGame, status: "loading" })
     if (sound) {
       try {
-        context.current ??= new AudioContext()
-        await context.current.resume()
-        cues.current ??= await loadCues(context.current)
+        await prepareAudio()
       } catch {
-        setNotice("Voice cues unavailable.")
+        setSound(false)
+        setNotice("Sound unavailable.")
       }
     }
     if (id === session.current)
       setGame(beginGame(randomAction(), performance.now()))
-  }, [sound])
+  }, [sound, prepareAudio])
 
   const submit = useCallback((action: Action) => {
     setGame((current) =>
@@ -97,11 +115,16 @@ export default function BopIt() {
   }, [game.status, game.deadline])
 
   useEffect(() => {
-    if (game.status === "playing" && sound && context.current && cues.current) {
+    if (
+      game.status === "playing" &&
+      sound &&
+      context.current &&
+      audio.current
+    ) {
       const source = context.current.createBufferSource()
       const gain = context.current.createGain()
       gain.gain.value = 0.6
-      source.buffer = cues.current[game.command]
+      source.buffer = audio.current.cues[game.command]
       source.connect(gain).connect(context.current.destination)
       source.start()
       voice.current = source
@@ -111,6 +134,24 @@ export default function BopIt() {
       }
     }
   }, [game.status, game.deadline, game.command, sound])
+
+  useEffect(() => {
+    if (
+      game.status !== "playing" ||
+      !sound ||
+      !context.current ||
+      !audio.current
+    )
+      return
+    const source = context.current.createBufferSource()
+    const gain = context.current.createGain()
+    source.buffer = audio.current.beat
+    source.loop = true
+    gain.gain.value = 0.3
+    source.connect(gain).connect(context.current.destination)
+    source.start()
+    return () => source.stop()
+  }, [game.status, sound])
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
@@ -146,34 +187,18 @@ export default function BopIt() {
   return (
     <main>
       <header>
-        <Link className="wordmark" href="/">
-          bop<span>it</span>
-        </Link>
-        <div className="scores">
-          <div>
-            score <strong>{game.score}</strong>
-          </div>
-          <div>
-            best <strong>{best}</strong>
-          </div>
-        </div>
+        <h1 className="score" aria-label={`Score ${game.score}, best ${best}`}>
+          {game.score}
+        </h1>
+        <p className="command" role="status" aria-live="assertive">
+          {game.status === "playing"
+            ? `${game.command} it!`
+            : game.status === "loading"
+              ? "Get ready"
+              : game.message}
+        </p>
       </header>
       <section className="game" aria-label="Bop It game">
-        <div className="call">
-          <h1
-            aria-live="assertive"
-            aria-label={game.status === "idle" ? "Bop It" : undefined}
-          >
-            {game.status === "playing"
-              ? `${game.command} it!`
-              : game.status === "loading"
-                ? "Get ready"
-                : game.status === "over"
-                  ? "Game over"
-                  : ""}
-          </h1>
-          <p role="status">{game.message}</p>
-        </div>
         <div className="toy">
           <Image
             src="/images/bopit-toy.svg"
@@ -193,14 +218,8 @@ export default function BopIt() {
             />
           ))}
         </div>
-        <div className="timer" aria-hidden="true">
-          {game.status === "playing" && (
-            <div
-              key={game.deadline}
-              style={{ animationDuration: `${turnDuration(game.score)}ms` }}
-            />
-          )}
-        </div>
+      </section>
+      <footer>
         <div className="round-controls">
           {game.status === "playing" || game.status === "loading" ? (
             <button onClick={stop}>Stop</button>
@@ -209,7 +228,11 @@ export default function BopIt() {
               {game.status === "over" ? "Play again" : "Start"}
             </button>
           )}
-          <button onClick={() => setSound(!sound)} aria-pressed={sound}>
+          <button
+            onClick={() => void toggleSound()}
+            aria-pressed={sound}
+            disabled={game.status === "loading"}
+          >
             Sound {sound ? "on" : "off"}
           </button>
         </div>
@@ -218,7 +241,7 @@ export default function BopIt() {
             {notice}
           </p>
         )}
-      </section>
+      </footer>
     </main>
   )
 }
