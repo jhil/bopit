@@ -133,12 +133,6 @@ a:focus-visible {
 .toy-control:disabled {
   cursor: default;
 }
-@media (hover: hover) and (pointer: fine) {
-  .toy-control:hover:not(:disabled) {
-    outline: 2px solid #d5b9f8;
-    outline-offset: 4px;
-  }
-}
 .round-controls {
   display: flex;
   justify-content: center;
@@ -168,7 +162,6 @@ a {
     min-height: 160px;
   }
   .toy {
-    position: relative;
     margin: 24px -16px;
   }
   .scores {

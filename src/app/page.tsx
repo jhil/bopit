@@ -160,7 +160,10 @@ export default function BopIt() {
       </header>
       <section className="game" aria-label="Bop It game">
         <div className="call">
-          <h1 aria-live="assertive">
+          <h1
+            aria-live="assertive"
+            aria-label={game.status === "idle" ? "Bop It" : undefined}
+          >
             {game.status === "playing"
               ? `${game.command} it!`
               : game.status === "loading"
