@@ -1,47 +1,37 @@
 {
   "name": "bopit",
   "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.4.1",
   "engines": {
-    "node": ">=0.10.25"
+    "node": ">=24 <25"
   },
-  "repository": "http://github.com/jhil/bopit",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "test": "node --test test/*.test.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "pnpm test && pnpm typecheck && pnpm lint && pnpm format:check && pnpm build",
+    "preview": "wrangler dev",
+    "cf:deploy": "pnpm build && wrangler deploy"
+  },
   "dependencies": {
-    "emailjs": "~0.3.6",
-    "express": "~3.4.3",
-    "jade": "~1.1.5",
-    "mysql-promise": "~0.1.0",
-    "socket.io": "~0.9.16",
-    "validator": "~2.0.0",
-    "q": "~0.9.7",
-    "supermarked": "~1.1.0",
-    "coffee-script": "~1.7.1",
-    "oauth": "~0.9.11",
-    "twitter": "~0.2.5",
-    "passport-twitter": "~1.0.2",
-    "passport": "~0.2.0"
+    "next": "16.4.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
-    "grunt-contrib-clean": "~0.5.0",
-    "grunt-contrib-coffee": "~0.7.0",
-    "grunt-contrib-compass": "~0.6.0",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-cssmin": "~0.7.0",
-    "grunt-contrib-jade": "~0.9.1",
-    "grunt-contrib-uglify": "~0.2.7",
-    "grunt-contrib-watch": "git://github.com/gruntjs/grunt-contrib-watch",
-    "grunt-autoprefixer": "~0.4.2",
-    "grunt-concurrent": "~0.4.1",
-    "grunt-express-server": "~0.4.5",
-    "grunt-newer": "~0.5.4",
-    "grunt-ngmin": "~0.0.2",
-    "grunt-usemin": "~2.0.0",
-    "connect-livereload": "~0.3.0",
-    "load-grunt-tasks": "~0.2.1",
-    "time-grunt": "~0.2.1",
-    "grunt-prettify": "~0.3.4",
-    "grunt-inject": "~0.1.1",
-    "grunt-angular-templates": "~0.5.1",
-    "grunt-banner": "~0.2.0"
+    "typescript": "6.0.3",
+    "@types/node": "26.6.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.2",
+    "prettier": "3.9.10",
+    "wrangler": "4.152.0"
   }
 }
